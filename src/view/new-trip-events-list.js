@@ -2,12 +2,12 @@ import { createElement } from '../render.js';
 
 export default class NewTripEventsList {
   getTemplate() {
-    return `<ul class="trip-events__list"></ul>`
+    return '<ul class="trip-events__list"></ul>';
   }
 
   getElement() {
     if ( !this.element ) {
-      this.element = createElement( this.getTemplate() )
+      this.element = createElement( this.getTemplate() );
     }
 
     return this.element;

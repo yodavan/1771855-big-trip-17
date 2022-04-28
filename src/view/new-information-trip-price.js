@@ -12,12 +12,12 @@ export default class NewInformationTripPrice {
               <p class="trip-info__cost">
                 Total: &euro;&nbsp;<span class="trip-info__cost-value">1230</span>
               </p>
-            </section>`
+            </section>`;
   }
 
   getElement() {
     if ( !this.element ) {
-      this.element = createElement( this.getTemplate() )
+      this.element = createElement( this.getTemplate() );
     }
 
     return this.element;

@@ -12,10 +12,10 @@ export default class BoardPresenter {
 
     render( new NewTripSort, this.boardContainer );
     render( this.tripList, this.boardContainer );
-    render( new NewEditPoint, this.tripList.getElement(), 'afterbegin' )
+    render( new NewEditPoint, this.tripList.getElement(), 'afterbegin' );
 
     for ( let i = 0; i < 3; i++ ) {
-      render( new NewItemCardTrip, this.tripList.getElement() )
+      render( new NewItemCardTrip, this.tripList.getElement() );
     }
-  }
+  };
 }

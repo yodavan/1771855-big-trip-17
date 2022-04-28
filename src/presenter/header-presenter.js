@@ -10,5 +10,5 @@ export default class HeaderPresenter {
 
     render( new NewInformationTripPrice, this.tripPriceContainer, 'afterbegin' );
     render( new NewTripFilters, this.filterContainer );
-  }
+  };
 }

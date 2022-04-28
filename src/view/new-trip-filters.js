@@ -19,12 +19,12 @@ export default class NewTripFilters {
               </div>
 
               <button class="visually-hidden" type="submit">Accept filter</button>
-            </form>`
+            </form>`;
   }
 
   getElement() {
     if ( !this.element ) {
-      this.element = createElement( this.getTemplate() )
+      this.element = createElement( this.getTemplate() );
     }
 
     return this.element;

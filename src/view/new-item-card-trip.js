@@ -38,12 +38,12 @@ export default class NewItemCardTrip {
                   <span class="visually-hidden">Open event</span>
                 </button>
               </div>
-            </li>`
+            </li>`;
   }
 
   getElement() {
     if ( !this.element ) {
-      this.element = createElement( this.getTemplate() )
+      this.element = createElement( this.getTemplate() );
     }
 
     return this.element;
