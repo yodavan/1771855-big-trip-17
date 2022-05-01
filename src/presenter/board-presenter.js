@@ -7,15 +7,19 @@ import { render } from '../render.js';
 export default class BoardPresenter {
   tripList = new NewTripEventsList();
 
-  init = ( boardContainer ) => {
+  init = ( boardContainer, pointsModel ) => {
     this.boardContainer = boardContainer;
+    this.pointsModel = pointsModel;
+    this.boardPoints = [...this.pointsModel.getPoints()]
+
+    console.log(this.boardPoints);
 
     render( new NewTripSort, this.boardContainer );
     render( this.tripList, this.boardContainer );
     render( new NewEditPoint, this.tripList.getElement(), 'afterbegin' );
 
-    for ( let i = 0; i < 3; i++ ) {
-      render( new NewItemCardTrip, this.tripList.getElement() );
-    }
+    this.boardPoints.forEach(( item ) => {
+      render( new NewItemCardTrip( item ), this.tripList.getElement() );
+    });
   };
 }
