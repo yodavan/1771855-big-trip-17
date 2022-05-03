@@ -10,16 +10,16 @@ export default class BoardPresenter {
   init = ( boardContainer, pointsModel ) => {
     this.boardContainer = boardContainer;
     this.pointsModel = pointsModel;
-    this.boardPoints = [...this.pointsModel.getPoints()]
-
-    console.log(this.boardPoints);
+    this.boardPoints = [...this.pointsModel.getPoints()];
 
     render( new NewTripSort, this.boardContainer );
     render( this.tripList, this.boardContainer );
-    render( new NewEditPoint, this.tripList.getElement(), 'afterbegin' );
+    render( new NewEditPoint( this.boardPoints[0] ), this.tripList.getElement(), 'afterbegin' );
 
-    this.boardPoints.forEach(( item ) => {
-      render( new NewItemCardTrip( item ), this.tripList.getElement() );
+    this.boardPoints.forEach(( point, index ) => {
+      if ( index !== 0 ) {
+        render( new NewItemCardTrip( point ), this.tripList.getElement() );
+      }
     });
   };
 }
