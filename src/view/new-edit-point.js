@@ -22,10 +22,10 @@ const getPicture = ( elementArray ) => {
 };
 
 const createPictureWrapper = ( picture ) => `<div class="event__photos-container">
-                                                <div class="event__photos-tape">
-                                                  ${ picture }
-                                                </div>
-                                              </div>`;
+                                              <div class="event__photos-tape">
+                                                ${ picture }
+                                              </div>
+                                            </div>`;
 
 const createSection = ( item ) => {
   if ( item.pictures.length === 0 && item.description === '' ) {
