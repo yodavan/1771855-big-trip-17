@@ -5,8 +5,8 @@ import { offersData, destinationData } from '../mock/route-point-data.js';
 //Создает новый элемент списка в зависимости от длинны массива и id (несколько id )
 const createElementList = ( array, data, element ) => {
   if ( array.lenght !== 0 ) {
-    let newArray = []
-    for ( let item of data ) {
+    let newArray = [];
+    for ( const item of data ) {
       const isTrue = array.some(( i ) => i === item.id );
 
       if ( isTrue ) {
@@ -18,21 +18,11 @@ const createElementList = ( array, data, element ) => {
   return '';
 };
 
-const createItem = ( item ) => {
-  return `<li class="event__offer">
-            <span class="event__offer-title">${ item.title }</span>
-            &plus;&euro;&nbsp;
-            <span class="event__offer-price">${ item.price }</span>
-          </li>`;
-};
-
-const cr = ( elementArray ) => {
-  let i = [];
-  for ( let item of elementArray ) {
-    i += createItem( item );
-  }
-  return i;
-};
+const createItem = ( item ) => `<li class="event__offer">
+                                  <span class="event__offer-title">${ item.title }</span>
+                                  &plus;&euro;&nbsp;
+                                  <span class="event__offer-price">${ item.price }</span>
+                                </li>`;
 
 export default class NewItemCardTrip {
   constructor( point ) {

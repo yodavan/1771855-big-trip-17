@@ -32,20 +32,20 @@ const getDifferenceDate = ( dateTo, dateFrom ) => {
   }
 
   if ( min >= 60 && min < 1440) {
-    return `${ h }H ${ m }M`
+    return `${ h }H ${ m }M`;
   }
 
   if ( min >= 1440 ) {
-    return `${ d }D ${ dh }H ${ m }M`
+    return `${ d }D ${ dh }H ${ m }M`;
   }
 };
 
 //Возвращает данные в зависимости от id
 const getElement = ( element, data ) => {
-  for ( let item of data ) {
+  for ( const item of data ) {
     const isTrue = element.some(( i ) => i === item.id );
     if ( isTrue ) {
-      return item
+      return item;
     }
   }
 };

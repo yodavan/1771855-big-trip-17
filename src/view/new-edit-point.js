@@ -1,39 +1,35 @@
 import { createElement } from '../render.js';
 import { getDateAndHours, getElement } from '../utils.js';
-import { offersData, destinationData } from '../mock/route-point-data.js';
+import { destinationData } from '../mock/route-point-data.js';
 
 const getText = ( element ) => {
   if ( element !== '' ) {
     return `<p class="event__destination-description">
               ${ element }
-            </p>`
+            </p>`;
   }
   return '';
 };
 
-const createPicture = ( item ) => {
-  return `<img class="event__photo" src="${ item.src }" alt="${ item.description }">`
-}
+const createPicture = ( item ) =>  `<img class="event__photo" src="${ item.src }" alt="${ item.description }">`;
 
 const getPicture = ( elementArray ) => {
   let i = [];
-  for ( let item of elementArray ) {
+  for ( const item of elementArray ) {
     i += createPicture( item );
   }
   return i;
 };
 
-const createPictureWrapper = ( getPicture ) => {
-  return `<div class="event__photos-container">
-            <div class="event__photos-tape">
-              ${ getPicture }
-            </div>
-          </div>`
-}
+const createPictureWrapper = ( picture ) => `<div class="event__photos-container">
+                                                <div class="event__photos-tape">
+                                                  ${ picture }
+                                                </div>
+                                              </div>`;
 
 const createSection = ( item ) => {
   if ( item.pictures.length === 0 && item.description === '' ) {
-    return ''
+    return '';
   }
   const description = getText( item.description );
   const picture = createPictureWrapper( getPicture( item.pictures ) );
