@@ -1,6 +1,22 @@
 import { createElement } from '../render.js';
-import { getHumanDate, createElementList, getDifferenceDate, getHoursMinute, getElement } from '../utils.js';
+import { getHumanDate, getDifferenceDate, getHoursMinute, getElement } from '../utils.js';
 import { offersData, destinationData } from '../mock/route-point-data.js';
+
+//Создает новый элемент списка в зависимости от длинны массива и id (несколько id )
+const createElementList = ( array, data, element ) => {
+  if ( array.lenght !== 0 ) {
+    let newArray = []
+    for ( let item of data ) {
+      const isTrue = array.some(( i ) => i === item.id );
+
+      if ( isTrue ) {
+        newArray += element( item );
+      }
+    }
+    return newArray;
+  }
+  return '';
+};
 
 const createItem = ( item ) => {
   return `<li class="event__offer">
@@ -8,6 +24,14 @@ const createItem = ( item ) => {
             &plus;&euro;&nbsp;
             <span class="event__offer-price">${ item.price }</span>
           </li>`;
+};
+
+const cr = ( elementArray ) => {
+  let i = [];
+  for ( let item of elementArray ) {
+    i += createItem( item );
+  }
+  return i;
 };
 
 export default class NewItemCardTrip {

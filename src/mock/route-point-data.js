@@ -9,7 +9,7 @@ const dateTo = [
   "2020-04-12T12:35:56.845Z", "2020-04-12T18:55:56.845Z", "2020-04-12T09:32:56.845Z", "2020-04-12T13:42:56.845Z"
 ];
 const offers = [ [1, 2], [3], [1], [], [2] ];
-const destination = [ [1], [2], [3] ];
+const destination = [ [1], [2], [3], [4] ];
 
 const favorite = [ true, false ]
 class GeneratePoints {
@@ -88,9 +88,40 @@ const destinationData = [
   },
   {
     id: 3,
-    description: "Amsterdam, is a beautiful city, a true asian pearl, with crowded streets.",
+    description: "",
     name: "Amsterdam",
     pictures: []
+  },
+  {
+    id: 4,
+    description: "London, is a beautiful city, a true asian pearl, with crowded streets.",
+    name: "London",
+    pictures: [
+      {
+        "src": "http://picsum.photos/300/200?r=0.0762563005163317",
+        "description": "Chamonix parliament building"
+      },
+      {
+        "src": "http://picsum.photos/300/200?r=0.0762563005163317",
+        "description": "Chamonix parliament building"
+      },
+      {
+        "src": "http://picsum.photos/300/200?r=0.0762563005163317",
+        "description": "Chamonix parliament building"
+      },
+      {
+        "src": "http://picsum.photos/300/200?r=0.0762563005163317",
+        "description": "Chamonix parliament building"
+      },
+      {
+        "src": "http://picsum.photos/300/200?r=0.0762563005163317",
+        "description": "Chamonix parliament building"
+      },
+      {
+        "src": "http://picsum.photos/300/200?r=0.0762563005163317",
+        "description": "Chamonix parliament building"
+      }
+    ]
   }
 ]
 

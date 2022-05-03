@@ -50,26 +50,9 @@ const getElement = ( element, data ) => {
   }
 };
 
-//Создает новый элемент списка в зависимости от длинны массива и id (несколько id )
-const createElementList = ( array, data, element ) => {
-  if ( array.lenght !== 0 ) {
-    let newArray = []
-    for ( let item of data ) {
-      const isTrue = array.some(( i ) => i === item.id );
-
-      if ( isTrue ) {
-        newArray += element( item );
-      }
-    }
-    return newArray;
-  }
-  return '';
-};
-
 export {
   getRandomInteger,
   getHumanDate,
-  createElementList,
   getDifferenceDate,
   getHoursMinute,
   getDateAndHours,

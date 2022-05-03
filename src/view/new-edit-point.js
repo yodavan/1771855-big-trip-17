@@ -1,5 +1,5 @@
 import { createElement } from '../render.js';
-import { getDateAndHours, getElement, createElementList } from '../utils.js';
+import { getDateAndHours, getElement } from '../utils.js';
 import { offersData, destinationData } from '../mock/route-point-data.js';
 
 const getText = ( element ) => {
@@ -15,26 +15,32 @@ const createPicture = ( item ) => {
   return `<img class="event__photo" src="${ item.src }" alt="${ item.description }">`
 }
 
-const getPicture = ( element, arraydestination ) => {
-  if ( element.length !== [] ) {
-    return `<div class="event__photos-container">
-              <div class="event__photos-tape">
-                ${ createElementList( element, arraydestination, createPicture ) }
-              </div>
-            </div>`
+const getPicture = ( elementArray ) => {
+  let i = [];
+  for ( let item of elementArray ) {
+    i += createPicture( item );
   }
+  return i;
 };
+
+const createPictureWrapper = ( getPicture ) => {
+  return `<div class="event__photos-container">
+            <div class="event__photos-tape">
+              ${ getPicture }
+            </div>
+          </div>`
+}
 
 const createSection = ( item ) => {
   if ( item.pictures.length === 0 && item.description === '' ) {
     return ''
   }
-
   const description = getText( item.description );
+  const picture = createPictureWrapper( getPicture( item.pictures ) );
   return `<section class="event__section  event__section--destination">
             <h3 class="event__section-title  event__section-title--destination">Destination</h3>
             ${ description }
-
+            ${ picture }
           </section>`;
 };
 
@@ -48,8 +54,7 @@ export default class NewEditPoint {
     const dFrom = getDateAndHours( dateFrom );
     const dTo = getDateAndHours( dateTo );
     const name = getElement( destination, destinationData ).name;
-
-    console.log( createSection(getElement( destination, destinationData )));
+    const destinationCard = createSection(getElement( destination, destinationData ));
 
     return `<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
@@ -197,10 +202,7 @@ export default class NewEditPoint {
                     </div>
                   </section>
 
-                  <section class="event__section  event__section--destination">
-                    <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-                    <p class="event__destination-description">Chamonix-Mont-Blanc (usually shortened to Chamonix) is a resort area near the junction of France, Switzerland and Italy. At the base of Mont Blanc, the highest summit in the Alps, it's renowned for its skiing.</p>
-                  </section>
+                  ${ destinationCard }
                 </section>
               </form>
             </li`;
