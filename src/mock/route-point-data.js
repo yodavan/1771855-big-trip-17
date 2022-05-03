@@ -61,7 +61,7 @@ const offersData = [
 const destinationData = [
   {
     id: 1,
-    description: 'Chamonix, is a beautiful city, a true asian pearl, with crowded streets.',
+    description: 'Chamonix, is a beautiful city, a true asian pearl, with crowded streets. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante',
     name: 'Chamonix',
     pictures: [
       {
@@ -72,7 +72,7 @@ const destinationData = [
   },
   {
     id: 2,
-    description: 'Geneva, is a beautiful city, a true asian pearl, with crowded streets.',
+    description: '',
     name: 'Geneva',
     pictures: [
       {
@@ -93,7 +93,7 @@ const destinationData = [
   },
   {
     id: 4,
-    description: 'London, is a beautiful city, a true asian pearl, with crowded streets.',
+    description: 'London, is a beautiful city, a true asian pearl, with crowded streets.Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     name: 'London',
     pictures: [
       {
