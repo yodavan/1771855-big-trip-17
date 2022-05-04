@@ -1,7 +1,9 @@
 import { createElement } from '../render.js';
 
 export default class NewInformationTripPrice {
-  getTemplate() {
+  #element = null;
+
+  get template() {
     return `<section class="trip-main__trip-info  trip-info">
               <div class="trip-info__main">
                 <h1 class="trip-info__title">Amsterdam &mdash; Chamonix &mdash; Geneva</h1>
@@ -15,15 +17,15 @@ export default class NewInformationTripPrice {
             </section>`;
   }
 
-  getElement() {
-    if ( !this.element ) {
-      this.element = createElement( this.getTemplate() );
+  get element() {
+    if ( !this.#element ) {
+      this.#element = createElement( this.template );
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }

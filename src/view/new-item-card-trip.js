@@ -25,11 +25,13 @@ const createItem = ( item ) => `<li class="event__offer">
                                 </li>`;
 
 export default class NewItemCardTrip {
+  #element = null;
+
   constructor( point ) {
     this.point = point;
   }
 
-  getTemplate() {
+  get template() {
     const { basePrice, type, dateFrom, dateTo, offers, isFavorite, destination } = this.point;
     const date = getHumanDate( dateFrom );
     const favorite = isFavorite === true ? 'active' : '';
@@ -71,15 +73,15 @@ export default class NewItemCardTrip {
             </li>`;
   }
 
-  getElement() {
-    if ( !this.element ) {
-      this.element = createElement( this.getTemplate() );
+  get element() {
+    if ( !this.#element ) {
+      this.#element = createElement( this.template );
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }

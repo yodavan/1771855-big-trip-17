@@ -41,11 +41,13 @@ const createSection = ( item ) => {
 };
 
 export default class NewEditPoint {
+  #element = null;
+
   constructor( point ) {
     this.point = point;
   }
 
-  getTemplate() {
+  get template() {
     const { basePrice, type, dateFrom, dateTo, destination } = this.point;
     const dFrom = getDateAndHours( dateFrom );
     const dTo = getDateAndHours( dateTo );
@@ -204,15 +206,15 @@ export default class NewEditPoint {
             </li`;
   }
 
-  getElement() {
-    if ( !this.element ) {
-      this.element = createElement( this.getTemplate() );
+  get element() {
+    if ( !this.#element ) {
+      this.#element = createElement( this.template );
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }
