@@ -9,7 +9,7 @@ const dateTo = [
   '2020-04-12T12:35:56.845Z', '2020-04-12T18:55:56.845Z', '2020-04-12T09:32:56.845Z', '2020-04-12T13:42:56.845Z'
 ];
 const offers = [ [1, 2], [3], [1], [], [2] ];
-const destination = [ [1], [2], [3], [4] ];
+const destination = [ [1], [2], [3], [4], [5] ];
 const favorite = [ true, false ];
 const offersData = [
   {
@@ -91,6 +91,12 @@ const destinationData = [
         description: 'Chamonix parliament building',
       },
     ]
+  },
+  {
+    id: 5,
+    description: 'London, is a beautiful city, a true asian pearl, with crowded streets.Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    name: 'London',
+    pictures: []
   }
 ];
 

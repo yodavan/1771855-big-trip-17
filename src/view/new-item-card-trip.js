@@ -2,27 +2,26 @@ import { createElement } from '../render.js';
 import { getHumanDate, getDifferenceDate, getHoursMinute, getElement } from '../utils.js';
 import { offersData, destinationData } from '../mock/route-point-data.js';
 
+const createItem = ( item ) => `<li class="event__offer">
+                                  <span class="event__offer-title">${ item.title }</span>
+                                  &plus;&euro;&nbsp;
+                                  <span class="event__offer-price">${ item.price }</span>
+                                </li>`;
+
 //Создает новый элемент списка в зависимости от длинны массива и id (несколько id )
-const createElementList = ( array, data, element ) => {
+const createElementList = ( array, data ) => {
   if ( array.lenght !== 0 ) {
     let newArray = [];
     for ( const item of data ) {
       const isTrue = array.some(( i ) => i === item.id );
-
       if ( isTrue ) {
-        newArray += element( item );
+        newArray += createItem( item );
       }
     }
     return newArray;
   }
   return '';
 };
-
-const createItem = ( item ) => `<li class="event__offer">
-                                  <span class="event__offer-title">${ item.title }</span>
-                                  &plus;&euro;&nbsp;
-                                  <span class="event__offer-price">${ item.price }</span>
-                                </li>`;
 
 export default class NewItemCardTrip {
   #element = null;
@@ -35,7 +34,7 @@ export default class NewItemCardTrip {
     const { basePrice, type, dateFrom, dateTo, offers, isFavorite, destination } = this.point;
     const date = getHumanDate( dateFrom );
     const favorite = isFavorite === true ? 'active' : '';
-    const newList = createElementList( offers, offersData, createItem );
+    const newList = createElementList( offers, offersData );
     const name = getElement( destination, destinationData ).name;
 
     return `<li class="trip-events__item">

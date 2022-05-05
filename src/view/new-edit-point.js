@@ -52,7 +52,7 @@ export default class NewEditPoint {
     const dFrom = getDateAndHours( dateFrom );
     const dTo = getDateAndHours( dateTo );
     const name = getElement( destination, destinationData ).name;
-    const destinationCard = createSection(getElement( destination, destinationData ));
+    const destinationCard = createSection( getElement( destination, destinationData ) );
 
     return `<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
