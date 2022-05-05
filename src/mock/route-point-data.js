@@ -98,6 +98,7 @@ class GeneratePoints {
   constructor( data ) {
     this.data = data;
   }
+
   getData() {
     const randomData = getRandomInteger(0, this.data.length - 1);
     return this.data[ randomData ];

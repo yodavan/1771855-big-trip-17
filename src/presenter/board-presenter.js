@@ -61,5 +61,5 @@ export default class BoardPresenter {
     });
 
     render( pointComponent, this.#tripList.element );
-  }
+  };
 }
