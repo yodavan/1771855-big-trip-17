@@ -31,7 +31,7 @@ const createPictureWrapper = ( picture ) => {
             ${ picture }
           </div>
         </div>`;
-}
+};
 
 const createSection = ( item ) => {
   if ( item.pictures.length === 0 && item.description === '' ) {
