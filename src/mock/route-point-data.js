@@ -9,37 +9,8 @@ const dateTo = [
   '2020-04-12T12:35:56.845Z', '2020-04-12T18:55:56.845Z', '2020-04-12T09:32:56.845Z', '2020-04-12T13:42:56.845Z'
 ];
 const offers = [ [1, 2], [3], [1], [], [2] ];
-const destination = [ [1], [2], [3], [4] ];
+const destination = [ [1], [2], [3], [4], [5] ];
 const favorite = [ true, false ];
-class GeneratePoints {
-  constructor( data ) {
-    this.data = data;
-  }
-
-  getData() {
-    const randomData = getRandomInteger(0, this.data.length - 1);
-    return this.data[ randomData ];
-  }
-}
-
-const dataPrice = new GeneratePoints( price );
-const dataType = new GeneratePoints( type );
-const dataDateFrom = new GeneratePoints( dateFrom );
-const dataDateTo = new GeneratePoints( dateTo );
-const datafavorite = new GeneratePoints( favorite );
-const dataOffers = new GeneratePoints( offers );
-const dataDestination = new GeneratePoints( destination );
-
-export const generateDataPoint = () => ({
-  basePrice: dataPrice.getData(),
-  dateFrom: dataDateFrom.getData(),
-  dateTo: dataDateTo.getData(),
-  destination: dataDestination.getData(),
-  isFavorite: datafavorite.getData(),
-  offers: dataOffers.getData(),
-  type: dataType.getData(),
-});
-
 const offersData = [
   {
     id: 1,
@@ -57,7 +28,6 @@ const offersData = [
     price: 12,
   }
 ];
-
 const destinationData = [
   {
     id: 1,
@@ -121,7 +91,42 @@ const destinationData = [
         description: 'Chamonix parliament building',
       },
     ]
+  },
+  {
+    id: 5,
+    description: 'London, is a beautiful city, a true asian pearl, with crowded streets.Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    name: 'London',
+    pictures: []
   }
 ];
+
+class GeneratePoints {
+  constructor( data ) {
+    this.data = data;
+  }
+
+  getData() {
+    const randomData = getRandomInteger(0, this.data.length - 1);
+    return this.data[ randomData ];
+  }
+}
+
+const dataPrice = new GeneratePoints( price );
+const dataType = new GeneratePoints( type );
+const dataDateFrom = new GeneratePoints( dateFrom );
+const dataDateTo = new GeneratePoints( dateTo );
+const datafavorite = new GeneratePoints( favorite );
+const dataOffers = new GeneratePoints( offers );
+const dataDestination = new GeneratePoints( destination );
+
+export const generateDataPoint = () => ({
+  basePrice: dataPrice.getData(),
+  dateFrom: dataDateFrom.getData(),
+  dateTo: dataDateTo.getData(),
+  destination: dataDestination.getData(),
+  isFavorite: datafavorite.getData(),
+  offers: dataOffers.getData(),
+  type: dataType.getData(),
+});
 
 export { offersData, destinationData };
