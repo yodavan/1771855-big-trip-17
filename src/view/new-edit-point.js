@@ -21,11 +21,17 @@ const getPicture = ( elementArray ) => {
   return i;
 };
 
-const createPictureWrapper = ( picture ) => `<div class="event__photos-container">
-                                              <div class="event__photos-tape">
-                                                ${ picture }
-                                              </div>
-                                            </div>`;
+const createPictureWrapper = ( picture ) => {
+  if (picture.length === 0) {
+    return '';
+  }
+
+  return `<div class="event__photos-container">
+          <div class="event__photos-tape">
+            ${ picture }
+          </div>
+        </div>`;
+}
 
 const createSection = ( item ) => {
   if ( item.pictures.length === 0 && item.description === '' ) {
