@@ -2,43 +2,21 @@ import { createElement } from '../render.js';
 import { getDateAndHours, getElement } from '../utils.js';
 import { destinationData } from '../mock/route-point-data.js';
 
-const getText = ( element ) => {
-  if ( element !== '' ) {
-    return `<p class="event__destination-description">
-              ${ element }
-            </p>`;
-  }
-  return '';
-};
+const getText = ( element ) => ( element !== '' ) ? `<p class="event__destination-description">${ element }</p>` : '';
 
-const createPicture = ( item ) =>  `<img class="event__photo" src="${ item.src }" alt="${ item.description }">`;
+const getPictures = ( element ) => ( element.length ) ?
+  `<div class="event__photos-container">
+    <div class="event__photos-tape">
+      ${ element.map(({ src, description }) => `<img class="event__photo" src="${ src }" alt="${ description }">`)}
+    </div>
+  </div>` : '';
 
-const getPicture = ( elementArray ) => {
-  let i = [];
-  for ( const item of elementArray ) {
-    i += createPicture( item );
-  }
-  return i;
-};
-
-const createPictureWrapper = ( picture ) => `<div class="event__photos-container">
-                                              <div class="event__photos-tape">
-                                                ${ picture }
-                                              </div>
-                                            </div>`;
-
-const createSection = ( item ) => {
-  if ( item.pictures.length === 0 && item.description === '' ) {
-    return '';
-  }
-  const description = getText( item.description );
-  const picture = createPictureWrapper( getPicture( item.pictures ) );
-  return `<section class="event__section  event__section--destination">
-            <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-            ${ description }
-            ${ picture }
-          </section>`;
-};
+const createSection = ( item ) => ( item.pictures.length === 0 && item.description === '' ) ? '' :
+  `<section class="event__section  event__section--destination">
+    <h3 class="event__section-title  event__section-title--destination">Destination</h3>
+    ${ getText( item.description ) }
+    ${ getPictures( item.pictures ) }
+  </section>`;
 
 export default class NewEditPoint {
   #element = null;
