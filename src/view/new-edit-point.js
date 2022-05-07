@@ -2,15 +2,6 @@ import { createElement } from '../render.js';
 import { getDateAndHours, getElement } from '../utils.js';
 import { destinationData } from '../mock/route-point-data.js';
 
-const getText = ( element ) => {
-  if ( element !== '' ) {
-    return `<p class="event__destination-description">
-              ${ element }
-            </p>`;
-  }
-  return '';
-};
-
 const createPicture = ( item ) =>  `<img class="event__photo" src="${ item.src }" alt="${ item.description }">`;
 
 const getPicture = ( elementArray ) => {
@@ -37,11 +28,10 @@ const createSection = ( item ) => {
   if ( item.pictures.length === 0 && item.description === '' ) {
     return '';
   }
-  const description = getText( item.description );
   const picture = createPictureWrapper( getPicture( item.pictures ) );
   return `<section class="event__section  event__section--destination">
             <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-            ${ description }
+            ${ ( item.description !== '' ) ? `<p class="event__destination-description">${ item.description }</p>` : '' }
             ${ picture }
           </section>`;
 };
