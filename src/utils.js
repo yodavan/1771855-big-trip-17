@@ -55,6 +55,15 @@ const getElement = ( element, data ) => {
   }
 };
 
+//Находит element по type
+const getElementType = ( type, typeArray ) => {
+  for ( const item of typeArray ) {
+    if ( type === item.type ) {
+      return item;
+    }
+  }
+};
+
 //Проверка на пустоту массива, нахождение по id и получение нового массива
 const getItem = ( element, data ) => {
   if ( element.length === 0 ) {
@@ -77,5 +86,6 @@ export {
   getHoursMinute,
   getDateAndHours,
   getElement,
-  getItem
+  getItem,
+  getElementType
 };

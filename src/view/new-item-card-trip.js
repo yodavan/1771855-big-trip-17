@@ -1,5 +1,5 @@
 import { createElement } from '../render.js';
-import { getHumanDate, getDifferenceDate, getHoursMinute, getElement, getItem } from '../utils.js';
+import { getHumanDate, getDifferenceDate, getHoursMinute, getElement, getItem, getElementType } from '../utils.js';
 import { offersData, destinationData } from '../mock/route-point-data.js';
 
 const createItem = ( item ) => `<li class="event__offer">
@@ -24,7 +24,7 @@ export default class NewItemCardTrip {
     const { basePrice, type, dateFrom, dateTo, offers, isFavorite, destination } = this.point;
     const date = getHumanDate( dateFrom );
     const favorite = isFavorite === true ? 'active' : '';
-    const newList = createElementList( getItem( offers, offersData ) );
+    const newList = createElementList( getItem( offers, getElementType( type, offersData ).offers ) );
     const name = getElement( destination, destinationData ).name;
 
     return `<li class="trip-events__item">
