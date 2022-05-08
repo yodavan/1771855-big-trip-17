@@ -9,7 +9,7 @@ const dateTo = [
   '2020-04-12T12:35:56.845Z', '2020-04-12T18:55:56.845Z', '2020-04-12T09:32:56.845Z', '2020-04-12T13:42:56.845Z'
 ];
 const offers = [ [1, 2], [3], [1], [], [2] ];
-const destination = [ [1], [2], [3], [4], [5] ];
+const destination = [ 'Chamonix', 'Geneva', 'Amsterdam', 'London', 'Saint-Petersburg' ];
 const favorite = [ true, false ];
 const offersData = [
   {
@@ -30,7 +30,6 @@ const offersData = [
 ];
 const destinationData = [
   {
-    id: 1,
     description: 'Chamonix, is a beautiful city, a true asian pearl, with crowded streets. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante',
     name: 'Chamonix',
     pictures: [
@@ -41,7 +40,6 @@ const destinationData = [
     ]
   },
   {
-    id: 2,
     description: '',
     name: 'Geneva',
     pictures: [
@@ -56,13 +54,11 @@ const destinationData = [
     ]
   },
   {
-    id: 3,
     description: '',
     name: 'Amsterdam',
     pictures: []
   },
   {
-    id: 4,
     description: 'London, is a beautiful city, a true asian pearl, with crowded streets.Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     name: 'London',
     pictures: [
@@ -93,9 +89,8 @@ const destinationData = [
     ]
   },
   {
-    id: 5,
-    description: 'London, is a beautiful city, a true asian pearl, with crowded streets.Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    name: 'London',
+    description: 'Saint-Petersburg, is a beautiful city, a true asian pearl, with crowded streets.Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    name: 'Saint-Petersburg',
     pictures: []
   }
 ];
