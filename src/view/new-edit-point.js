@@ -19,8 +19,8 @@ const createSection = ( item ) => ( item.pictures.length === 0 && item.descripti
   </section>`;
 
 const getOfferItem = ( item, offers ) => `<div class="event__offer-selector">
-                                    <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-1" type="checkbox" name="event-offer-luggage" ${ ( offers.some(( i ) => i === item.id ) ) ? 'checked' : ''}>
-                                    <label class="event__offer-label" for="event-offer-luggage-1">
+                                    <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-${ item.id }" type="checkbox" name="event-offer-luggage" ${ ( offers.some(( i ) => i === item.id ) ) ? 'checked' : ''}>
+                                    <label class="event__offer-label" for="event-offer-luggage-${ item.id }">
                                       <span class="event__offer-title">${ item.title }</span>
                                       &plus;&euro;&nbsp;
                                       <span class="event__offer-price">${ item.price }</span>
