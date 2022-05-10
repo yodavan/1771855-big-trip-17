@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import { getDateAndHours, getElement, getElementType } from '../utils.js';
 import { destinationData, offersData } from '../mock/route-point-data.js';
 
@@ -19,21 +19,21 @@ const createSection = ( item ) => ( item.pictures.length === 0 && item.descripti
   </section>`;
 
 const getOfferItem = ( item, offers ) => `<div class="event__offer-selector">
-                                    <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-${ item.id }" type="checkbox" name="event-offer-luggage" ${ ( offers.some(( i ) => i === item.id ) ) ? 'checked' : ''}>
-                                    <label class="event__offer-label" for="event-offer-luggage-${ item.id }">
-                                      <span class="event__offer-title">${ item.title }</span>
-                                      &plus;&euro;&nbsp;
-                                      <span class="event__offer-price">${ item.price }</span>
-                                    </label>
-                                  </div>`;
+                                            <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-${ item.id }" type="checkbox" name="event-offer-luggage" ${ ( offers.some(( i ) => i === item.id ) ) ? 'checked' : ''}>
+                                            <label class="event__offer-label" for="event-offer-luggage-${ item.id }">
+                                              <span class="event__offer-title">${ item.title }</span>
+                                              &plus;&euro;&nbsp;
+                                              <span class="event__offer-price">${ item.price }</span>
+                                            </label>
+                                          </div>`;
 
 const createOffers = ( array, offers ) => ( array.length !== 0 ) ?
   `<div class="event__available-offers">${ array.map(( item ) => getOfferItem( item, offers )).join('') }</div>` : '';
 
-export default class NewEditPoint {
-  #element = null;
+export default class NewEditPoint extends AbstractView {
 
   constructor( point ) {
+    super();
     this.point = point;
   }
 
@@ -149,17 +149,5 @@ export default class NewEditPoint {
                 </section>
               </form>
             </li`;
-  }
-
-  get element() {
-    if ( !this.#element ) {
-      this.#element = createElement( this.template );
-    }
-
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }

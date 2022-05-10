@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import { getHumanDate, getDifferenceDate, getHoursMinute, getElement, getItem, getElementType } from '../utils.js';
 import { offersData, destinationData } from '../mock/route-point-data.js';
 
@@ -13,10 +13,10 @@ const createElementList = ( array ) => ( array.length !== 0 ) ?
     ${ array.map( (item) => createItem(item) ).join('') }
   </ul>` : '';
 
-export default class NewItemCardTrip {
-  #element = null;
+export default class NewItemCardTrip extends AbstractView {
 
   constructor( point ) {
+    super();
     this.point = point;
   }
 
@@ -58,17 +58,5 @@ export default class NewItemCardTrip {
                 </button>
               </div>
             </li>`;
-  }
-
-  get element() {
-    if ( !this.#element ) {
-      this.#element = createElement( this.template );
-    }
-
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }
