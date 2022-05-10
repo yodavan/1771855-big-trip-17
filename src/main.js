@@ -6,9 +6,9 @@ const tripMain = document.querySelector( '.trip-main' );
 const tripFilters = tripMain.querySelector( '.trip-controls__filters' );
 const tripEvents = document.querySelector( '.trip-events' );
 
-const boardPresenter = new BoardPresenter();
-const headerPresenter = new HeaderPresenter();
 const pointsModel = new PointsModel();
+const boardPresenter = new BoardPresenter( tripEvents, pointsModel );
+const headerPresenter = new HeaderPresenter( tripMain, tripFilters );
 
-boardPresenter.init( tripEvents, pointsModel );
-headerPresenter.init( tripMain, tripFilters );
+boardPresenter.init();
+headerPresenter.init();

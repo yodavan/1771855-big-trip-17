@@ -3,7 +3,7 @@ import NewTripSort from '../view/new-trip-sort.js';
 import NewItemCardTrip from '../view/new-item-card-trip.js';
 import NewEditPoint from '../view/new-edit-point.js';
 import NoTripPoints from '../view/no-trip-points.js';
-import { render } from '../render.js';
+import { render, replace } from '../framework/render.js';
 
 export default class BoardPresenter {
   #boardContainer = null;
@@ -11,21 +11,15 @@ export default class BoardPresenter {
   #boardPoints = [];
   #tripList = new NewTripEventsList();
 
-  init = ( boardContainer, pointsModel ) => {
+  constructor ( boardContainer, pointsModel ) {
     this.#boardContainer = boardContainer;
     this.#pointsModel = pointsModel;
+  }
+
+  init = () => {
     this.#boardPoints = [...this.#pointsModel.points];
 
-    if ( this.#boardPoints.length === 0 ) {
-      return render( new NoTripPoints, this.#boardContainer );
-    }
-
-    render( new NewTripSort, this.#boardContainer );
-    render( this.#tripList, this.#boardContainer );
-
-    this.#boardPoints.forEach(( point ) => {
-      this.#renderPoint( point );
-    });
+    this.#renderBoard();
   };
 
   #renderPoint = ( point ) => {
@@ -33,11 +27,11 @@ export default class BoardPresenter {
     const pointEditComponent = new NewEditPoint( point );
 
     const replaceCardToForm = () => {
-      this.#tripList.element.replaceChild( pointEditComponent.element, pointComponent.element );
+      replace( pointEditComponent, pointComponent );
     };
 
     const replaceFormToCard = () => {
-      this.#tripList.element.replaceChild( pointComponent.element, pointEditComponent.element );
+      replace( pointComponent, pointEditComponent );
     };
 
     const onEscKeyDown = ( evt ) => {
@@ -53,18 +47,30 @@ export default class BoardPresenter {
       document.removeEventListener( 'keydown', onEscKeyDown );
     };
 
-    pointComponent.element.querySelector( '.event__rollup-btn' ).addEventListener('click', () => {
+    pointComponent.setEditClickHandler(() => {
       replaceCardToForm();
       document.addEventListener( 'keydown', onEscKeyDown );
       pointEditComponent.element.querySelector( '.event__rollup-btn' ).addEventListener( 'click', onCloseButton );
     });
 
-    pointEditComponent.element.querySelector( 'form' ).addEventListener('submit', ( evt ) => {
-      evt.preventDefault();
+    pointEditComponent.setFormSubmitHandler(() => {
       replaceFormToCard();
       document.removeEventListener( 'keydown', onEscKeyDown );
     });
 
     render( pointComponent, this.#tripList.element );
+  };
+
+  #renderBoard = () => {
+    if ( this.#boardPoints.length === 0 ) {
+      return render( new NoTripPoints, this.#boardContainer );
+    }
+
+    render( new NewTripSort, this.#boardContainer );
+    render( this.#tripList, this.#boardContainer );
+
+    this.#boardPoints.forEach(( point ) => {
+      this.#renderPoint( point );
+    });
   };
 }

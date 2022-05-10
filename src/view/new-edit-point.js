@@ -150,4 +150,14 @@ export default class NewEditPoint extends AbstractView {
               </form>
             </li`;
   }
+
+  setFormSubmitHandler = ( callback ) => {
+    this._callback.formSubmit = callback;
+    this.element.querySelector('form').addEventListener('submit', this.#formSubmitHandler);
+  };
+
+  #formSubmitHandler = ( evt ) => {
+    evt.preventDefault();
+    this._callback.formSubmit();
+  };
 }

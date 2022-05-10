@@ -6,10 +6,12 @@ export default class HeaderPresenter {
   #tripPriceContainer = null;
   #filterContainer = null;
 
-  init = ( tripPriceContainer, filterContainer ) => {
+  constructor ( tripPriceContainer, filterContainer ) {
     this.#tripPriceContainer = tripPriceContainer;
     this.#filterContainer = filterContainer;
+  }
 
+  init = () => {
     render( new NewInformationTripPrice, this.#tripPriceContainer, 'afterbegin' );
     render( new NewTripFilters, this.#filterContainer );
   };
