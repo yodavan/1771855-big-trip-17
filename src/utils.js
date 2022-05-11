@@ -46,14 +46,37 @@ const getDifferenceDate = ( dateTo, dateFrom ) => {
   }
 };
 
-//Возвращает данные в зависимости от id
+//Возвращает данные в зависимости от name
 const getElement = ( element, data ) => {
   for ( const item of data ) {
-    const isTrue = element.some(( i ) => i === item.id );
-    if ( isTrue ) {
+    if ( element === item.name ) {
       return item;
     }
   }
+};
+
+//Находит element по type
+const getElementType = ( type, typeArray ) => {
+  for ( const item of typeArray ) {
+    if ( type === item.type ) {
+      return item;
+    }
+  }
+};
+
+//Проверка на пустоту массива, нахождение по id и получение нового массива
+const getItem = ( element, data ) => {
+  if ( element.length === 0 ) {
+    return element;
+  }
+  const accum = [];
+  for ( const item of data ) {
+    const isTrue = element.some(( i ) => i === item.id );
+    if ( isTrue ) {
+      accum.push( item );
+    }
+  }
+  return accum;
 };
 
 export {
@@ -62,5 +85,7 @@ export {
   getDifferenceDate,
   getHoursMinute,
   getDateAndHours,
-  getElement
+  getElement,
+  getItem,
+  getElementType
 };

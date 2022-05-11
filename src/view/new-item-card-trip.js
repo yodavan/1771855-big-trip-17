@@ -1,5 +1,5 @@
-import { createElement } from '../render.js';
-import { getHumanDate, getDifferenceDate, getHoursMinute, getElement } from '../utils.js';
+import AbstractView from '../framework/view/abstract-view.js';
+import { getHumanDate, getDifferenceDate, getHoursMinute, getElement, getItem, getElementType } from '../utils.js';
 import { offersData, destinationData } from '../mock/route-point-data.js';
 
 const createItem = ( item ) => `<li class="event__offer">
@@ -8,25 +8,15 @@ const createItem = ( item ) => `<li class="event__offer">
                                   <span class="event__offer-price">${ item.price }</span>
                                 </li>`;
 
-//Создает новый элемент списка в зависимости от длинны массива и id (несколько id )
-const createElementList = ( array, data ) => {
-  if ( array.lenght !== 0 ) {
-    let newArray = [];
-    for ( const item of data ) {
-      const isTrue = array.some(( i ) => i === item.id );
-      if ( isTrue ) {
-        newArray += createItem( item );
-      }
-    }
-    return newArray;
-  }
-  return '';
-};
+const createElementList = ( array ) => ( array.length !== 0 ) ?
+  `<ul class="event__selected-offers">
+    ${ array.map( (item) => createItem(item) ).join('') }
+  </ul>` : '';
 
-export default class NewItemCardTrip {
-  #element = null;
+export default class NewItemCardTrip extends AbstractView {
 
   constructor( point ) {
+    super();
     this.point = point;
   }
 
@@ -34,7 +24,7 @@ export default class NewItemCardTrip {
     const { basePrice, type, dateFrom, dateTo, offers, isFavorite, destination } = this.point;
     const date = getHumanDate( dateFrom );
     const favorite = isFavorite === true ? 'active' : '';
-    const newList = createElementList( offers, offersData );
+    const newList = createElementList( getItem( offers, getElementType( type, offersData ).offers ) );
     const name = getElement( destination, destinationData ).name;
 
     return `<li class="trip-events__item">
@@ -56,9 +46,7 @@ export default class NewItemCardTrip {
                   &euro;&nbsp;<span class="event__price-value">${ basePrice }</span>
                 </p>
                 <h4 class="visually-hidden">Offers:</h4>
-                <ul class="event__selected-offers">
-                  ${ newList }
-                </ul>
+                ${ newList }
                 <button class="event__favorite-btn event__favorite-btn--${ favorite }" type="button">
                   <span class="visually-hidden">Add to favorite</span>
                   <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
@@ -72,15 +60,13 @@ export default class NewItemCardTrip {
             </li>`;
   }
 
-  get element() {
-    if ( !this.#element ) {
-      this.#element = createElement( this.template );
-    }
+  setEditClickHandler = ( callback ) => {
+    this._callback.editClick = callback;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#editClickHandler);
+  };
 
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
+  #editClickHandler = ( evt ) => {
+    evt.preventDefault();
+    this._callback.editClick();
+  };
 }
