@@ -8,7 +8,7 @@ const tripEvents = document.querySelector( '.trip-events' );
 
 const pointsModel = new PointsModel();
 const boardPresenter = new BoardPresenter( tripEvents, pointsModel );
-const headerPresenter = new HeaderPresenter( tripMain, tripFilters );
+const headerPresenter = new HeaderPresenter( tripMain, tripFilters, pointsModel );
 
 boardPresenter.init();
 headerPresenter.init();

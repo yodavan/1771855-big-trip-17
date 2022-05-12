@@ -3,10 +3,10 @@ import { getRandomInteger } from '../utils.js';
 const price = [ 222, 400, 45, 78, 90, 145, 278, ];
 const type = [ 'taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant', ];
 const dateFrom = [
-  '2020-04-11T12:35:56.845Z', '2020-04-11T18:55:56.845Z', '2020-04-11T09:32:56.845Z', '2020-04-11T13:42:56.845Z'
+  '2020-04-09T12:35:56.845Z', '2020-04-10T18:55:56.845Z', '2020-04-11T09:32:56.845Z', '2020-04-08T13:42:56.845Z'
 ];
 const dateTo = [
-  '2020-04-12T12:35:56.845Z', '2020-04-12T18:55:56.845Z', '2020-04-12T09:32:56.845Z', '2020-04-12T13:42:56.845Z'
+  '2020-04-12T12:35:56.845Z', '2020-04-13T18:55:56.845Z', '2020-04-14T09:32:56.845Z', '2020-04-15T13:42:56.845Z'
 ];
 const offers = [ [1, 2, 5], [3, 4], [1], [], [2, 3, 4] ];
 const destination = [ 'Chamonix', 'Geneva', 'Amsterdam', 'London', 'Saint-Petersburg' ];
