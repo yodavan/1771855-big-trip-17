@@ -71,12 +71,17 @@ export default class BoardPresenter {
     render( pointComponent, this.#tripList.element );
   };
 
+  #renderNoPoints = () => {
+    render( new NoTripPoints, this.#boardContainer );
+  };
+
   #renderPoints = () => {
-    if ( this.#boardPoints.length === 0 ) {
-      return render( new NoTripPoints, this.#boardContainer );
+    if ( !this.#boardPoints.length ) {
+      return this.#renderNoPoints();
     }
 
     this.#renderSortFilters();
+    this.#renderTripPrice();
 
     this.#boardPoints.forEach(( point ) => {
       this.#renderPoint( point );
@@ -95,7 +100,6 @@ export default class BoardPresenter {
 
   #renderBoard = () => {
     this.#renderPoints();
-    this.#renderTripPrice();
     this.#renderMainFilters();
 
     render( this.#tripList, this.#boardContainer );
