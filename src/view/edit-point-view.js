@@ -1,6 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { getDateAndHours, getElement, getElementType } from '../utils.js';
-import { destinationData, offersData } from '../mock/route-point-data.js';
+import { destinationData, offersData, typePoints } from '../mock/route-point-data.js';
 
 const getText = ( element ) => ( element !== '' ) ? `<p class="event__destination-description">${ element }</p>` : '';
 
@@ -17,6 +17,11 @@ const createSection = ( item ) => ( item.pictures.length === 0 && item.descripti
     ${ getText( item.description ) }
     ${ getPictures( item.pictures ) }
   </section>`;
+
+const getTypeList = ( item ) => `<div class="event__type-item">
+                                  <input id="event-type-${ item }-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${ item }">
+                                  <label class="event__type-label  event__type-label--${ item }" for="event-type-${ item }-1">${ item }</label>
+                                </div>`;
 
 const getOfferItem = ( item, offers ) => `<div class="event__offer-selector">
                                             <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-${ item.id }" type="checkbox" name="event-offer-luggage" ${ ( offers.some(( i ) => i === item.id ) ) ? 'checked' : ''}>
@@ -44,6 +49,8 @@ export default class NewEditPoint extends AbstractView {
     const name = getElement( destination, destinationData ).name;
     const destinationCard = createSection( getElement( destination, destinationData ) );
     const typeOffers = createOffers( getElementType( type, offersData ).offers, offers );
+    const typeList = typePoints.map(( item ) => getTypeList( item )).join('');
+
 
     return `<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
@@ -58,51 +65,7 @@ export default class NewEditPoint extends AbstractView {
                     <div class="event__type-list">
                       <fieldset class="event__type-group">
                         <legend class="visually-hidden">Event type</legend>
-
-                        <div class="event__type-item">
-                          <input id="event-type-taxi-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="taxi">
-                          <label class="event__type-label  event__type-label--taxi" for="event-type-taxi-1">Taxi</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-bus-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="bus">
-                          <label class="event__type-label  event__type-label--bus" for="event-type-bus-1">Bus</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-train-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="train">
-                          <label class="event__type-label  event__type-label--train" for="event-type-train-1">Train</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-ship-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="ship">
-                          <label class="event__type-label  event__type-label--ship" for="event-type-ship-1">Ship</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-drive-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="drive">
-                          <label class="event__type-label  event__type-label--drive" for="event-type-drive-1">Drive</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-flight-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="flight" checked>
-                          <label class="event__type-label  event__type-label--flight" for="event-type-flight-1">Flight</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-check-in-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="check-in">
-                          <label class="event__type-label  event__type-label--check-in" for="event-type-check-in-1">Check-in</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-sightseeing-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="sightseeing">
-                          <label class="event__type-label  event__type-label--sightseeing" for="event-type-sightseeing-1">Sightseeing</label>
-                        </div>
-
-                        <div class="event__type-item">
-                          <input id="event-type-restaurant-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="restaurant">
-                          <label class="event__type-label  event__type-label--restaurant" for="event-type-restaurant-1">Restaurant</label>
-                        </div>
+                        ${ typeList }
                       </fieldset>
                     </div>
                   </div>
@@ -154,6 +117,7 @@ export default class NewEditPoint extends AbstractView {
   setFormSubmitHandler = ( callback ) => {
     this._callback.formSubmit = callback;
     this.element.querySelector('form').addEventListener('submit', this.#formSubmitHandler);
+    this.element.querySelector( '.event__rollup-btn' ).addEventListener( 'click', this.#formSubmitHandler );
   };
 
   #formSubmitHandler = ( evt ) => {

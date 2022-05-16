@@ -1,7 +1,7 @@
 import { getRandomInteger } from '../utils.js';
 
 const price = [ 222, 400, 45, 78, 90, 145, 278, ];
-const type = [ 'taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant', ];
+const typePoints = [ 'taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant' ];
 const dateFrom = [
   '2020-04-09T12:35:56.845Z', '2020-04-10T18:55:56.845Z', '2020-04-11T09:32:56.845Z', '2020-04-08T13:42:56.845Z'
 ];
@@ -362,14 +362,14 @@ class GeneratePoints {
 }
 
 const dataPrice = new GeneratePoints( price );
-const dataType = new GeneratePoints( type );
+const dataType = new GeneratePoints( typePoints );
 const dataDateFrom = new GeneratePoints( dateFrom );
 const dataDateTo = new GeneratePoints( dateTo );
 const datafavorite = new GeneratePoints( favorite );
 const dataOffers = new GeneratePoints( offers );
 const dataDestination = new GeneratePoints( destination );
 
-export const generateDataPoint = () => ({
+const generateDataPoint = () => ({
   basePrice: dataPrice.getData(),
   dateFrom: dataDateFrom.getData(),
   dateTo: dataDateTo.getData(),
@@ -379,4 +379,9 @@ export const generateDataPoint = () => ({
   type: dataType.getData(),
 });
 
-export { offersData, destinationData };
+export {
+  generateDataPoint,
+  offersData,
+  destinationData,
+  typePoints
+};
