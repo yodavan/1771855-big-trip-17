@@ -18,10 +18,10 @@ const createSection = ( item ) => ( item.pictures.length === 0 && item.descripti
     ${ getPictures( item.pictures ) }
   </section>`;
 
-const getTypeList = ( item ) => `<div class="event__type-item">
-                                  <input id="event-type-${ item }-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${ item }">
-                                  <label class="event__type-label  event__type-label--${ item }" for="event-type-${ item }-1">${ item }</label>
-                                </div>`;
+const getTypeList = ( item, type ) => `<div class="event__type-item">
+                                        <input id="event-type-${ item }-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${ item }" ${ ( item === type ) ? 'checked' : '' }>
+                                        <label class="event__type-label  event__type-label--${ item }" for="event-type-${ item }-1">${ item }</label>
+                                      </div>`;
 
 const getOfferItem = ( item, offers ) => `<div class="event__offer-selector">
                                             <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-${ item.id }" type="checkbox" name="event-offer-luggage" ${ ( offers.some(( i ) => i === item.id ) ) ? 'checked' : ''}>
@@ -49,7 +49,7 @@ export default class NewEditPoint extends AbstractView {
     const name = getElement( destination, destinationData ).name;
     const destinationCard = createSection( getElement( destination, destinationData ) );
     const typeOffers = createOffers( getElementType( type, offersData ).offers, offers );
-    const typeList = typePoints.map(( item ) => getTypeList( item )).join('');
+    const typeList = typePoints.map(( item ) => getTypeList( item, type )).join('');
 
 
     return `<li class="trip-events__item">

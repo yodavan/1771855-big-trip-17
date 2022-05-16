@@ -13,7 +13,7 @@ export default class PointPresenter {
 
   constructor ( pointListContainer ) {
     this.#pointListContainer = pointListContainer;
-  };
+  }
 
   init = ( point ) => {
     this.#point = point;
@@ -24,7 +24,7 @@ export default class PointPresenter {
     this.#pointComponent.setEditClickHandler( this.#handleEditClick );
     this.#pointEditComponent.setFormSubmitHandler( this.#handleFormSubmit );
 
-    render( this.#pointComponent, this.#pointListContainer )
+    render( this.#pointComponent, this.#pointListContainer );
   };
 
   #replaceCardToForm = () => {

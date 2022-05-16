@@ -4,7 +4,7 @@ import NewTripFilters from '../view/new-trip-filters-view.js';
 import NewTripSort from '../view/new-trip-sort-view.js';
 import PointPresenter from './point-presenter.js';
 import NoTripPoints from '../view/no-trip-points-view.js';
-import { render, replace, RenderPosition } from '../framework/render.js';
+import { render, RenderPosition } from '../framework/render.js';
 
 export default class BoardPresenter {
   #tripPriceContainer = null;
