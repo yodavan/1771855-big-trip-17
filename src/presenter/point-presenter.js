@@ -1,5 +1,5 @@
 
-import { render, replace } from '../framework/render.js';
+import { render, replace, remove } from '../framework/render.js';
 import NewItemCardTrip from '../view/item-card-trip-view.js';
 import NewEditPoint from '../view/edit-point-view.js';
 
@@ -18,13 +18,35 @@ export default class PointPresenter {
   init = ( point ) => {
     this.#point = point;
 
+    const prevPointComponent = this.#pointListContainer;
+    const prevPointEditComponent = this.#pointEditComponent;
+
     this.#pointComponent = new NewItemCardTrip( point );
     this.#pointEditComponent = new NewEditPoint( point );
 
     this.#pointComponent.setEditClickHandler( this.#handleEditClick );
     this.#pointEditComponent.setFormSubmitHandler( this.#handleFormSubmit );
 
-    render( this.#pointComponent, this.#pointListContainer );
+    if ( prevPointComponent === null || prevPointEditComponent === null ) {
+      render( this.#pointComponent, this.#pointListContainer );
+      return;
+    }
+
+    if ( this.#pointListContainer.contains( prevPointComponent.element ) ) {
+      replace( this.#pointComponent, prevPointComponent );
+    }
+
+    if ( this.#pointListContainer.contains( prevPointEditComponent.element ) ) {
+      replace( this.#pointEditComponent, prevPointEditComponent );
+    }
+
+    remove( prevPointComponent );
+    remove( prevPointEditComponent );
+  };
+
+  destroy = () => {
+    remove( this.#pointComponent );
+    remove( this.#pointEditComponent );
   };
 
   #replaceCardToForm = () => {
@@ -51,22 +73,4 @@ export default class PointPresenter {
   #handleFormSubmit = () => {
     this.#replaceFormToCard();
   };
-
-  // const onCloseButton = () => {
-  //   replaceFormToCard();
-  //   document.removeEventListener( 'keydown', onEscKeyDown );
-  // };
-
-  // pointComponent.setEditClickHandler(() => {
-  //   replaceCardToForm();
-  //   document.addEventListener( 'keydown', onEscKeyDown );
-  //   pointEditComponent.element.querySelector( '.event__rollup-btn' ).addEventListener( 'click', onCloseButton );
-  // });
-
-  // pointEditComponent.setFormSubmitHandler(() => {
-  //   replaceFormToCard();
-  //   document.removeEventListener( 'keydown', onEscKeyDown );
-  // });
-
-  // render( pointComponent, this.#tripList.element );
 }
