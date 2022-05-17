@@ -24,7 +24,7 @@ export default class BoardPresenter {
   }
 
   init = () => {
-    this.#boardPoints = [...this.#pointsModel.points];
+    this.#boardPoints = [ ...this.#pointsModel.points ];
     this.#renderBoard();
   };
 
@@ -38,7 +38,7 @@ export default class BoardPresenter {
   };
 
   #renderPoint = ( point ) => {
-    const pointPresenter = new PointPresenter( this.#tripList.element );
+    const pointPresenter = new PointPresenter( this.#tripList.element, this.#handlePointChange );
     pointPresenter.init( point );
     this.#pointPresenter.set( point.id, pointPresenter );
   };

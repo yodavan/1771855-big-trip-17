@@ -5,27 +5,32 @@ import NewEditPoint from '../view/edit-point-view.js';
 
 export default class PointPresenter {
   #pointListContainer = null;
+  #changeData = null;
 
   #pointComponent = null;
   #pointEditComponent = null;
 
   #point = null;
 
-  constructor ( pointListContainer ) {
+  constructor ( pointListContainer, changeData ) {
     this.#pointListContainer = pointListContainer;
+    this.#changeData = changeData;
   }
 
   init = ( point ) => {
     this.#point = point;
 
-    const prevPointComponent = this.#pointListContainer;
+    const prevPointComponent = this.#pointComponent;
     const prevPointEditComponent = this.#pointEditComponent;
 
     this.#pointComponent = new NewItemCardTrip( point );
     this.#pointEditComponent = new NewEditPoint( point );
 
     this.#pointComponent.setEditClickHandler( this.#handleEditClick );
+    this.#pointComponent.setFavoriteClickHandler( this.#handleFavoriteClick );
+
     this.#pointEditComponent.setFormSubmitHandler( this.#handleFormSubmit );
+    this.#pointEditComponent.setClickCloseEditPopup( this.#handleEditClose );
 
     if ( prevPointComponent === null || prevPointEditComponent === null ) {
       render( this.#pointComponent, this.#pointListContainer );
@@ -70,7 +75,16 @@ export default class PointPresenter {
     this.#replaceCardToForm();
   };
 
-  #handleFormSubmit = () => {
+  #handleFavoriteClick = () => {
+    this.#changeData({ ...this.#point, isFavorite: !this.#point.isFavorite });
+  };
+
+  #handleEditClose = () => {
+    this.#replaceFormToCard();
+  }
+
+  #handleFormSubmit = ( point ) => {
+    this.#changeData( point );
     this.#replaceFormToCard();
   };
 }

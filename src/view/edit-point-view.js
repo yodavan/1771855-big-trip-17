@@ -114,14 +114,22 @@ export default class NewEditPoint extends AbstractView {
             </li`;
   }
 
+  setClickCloseEditPopup = ( callback ) => {
+    this._callback.closeEditPopup = callback;
+    this.element.querySelector( '.event__rollup-btn' ).addEventListener( 'click', this.#closeEditPopup );
+  };
+
   setFormSubmitHandler = ( callback ) => {
     this._callback.formSubmit = callback;
     this.element.querySelector('form').addEventListener('submit', this.#formSubmitHandler);
-    this.element.querySelector( '.event__rollup-btn' ).addEventListener( 'click', this.#formSubmitHandler );
   };
 
   #formSubmitHandler = ( evt ) => {
     evt.preventDefault();
-    this._callback.formSubmit();
+    this._callback.formSubmit( this.point );
+  };
+
+  #closeEditPopup = () => {
+    this._callback.closeEditPopup();
   };
 }
