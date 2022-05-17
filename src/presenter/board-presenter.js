@@ -28,6 +28,10 @@ export default class BoardPresenter {
     this.#renderBoard();
   };
 
+  #handleModeChange = () => {
+    this.#pointPresenter.forEach(( presenter ) => presenter.resetView());
+  };
+
   #renderSortFilters = () => {
     render( new NewTripSort, this.#boardContainer );
   };
@@ -38,7 +42,7 @@ export default class BoardPresenter {
   };
 
   #renderPoint = ( point ) => {
-    const pointPresenter = new PointPresenter( this.#tripList.element, this.#handlePointChange );
+    const pointPresenter = new PointPresenter( this.#tripList.element, this.#handlePointChange, this.#handleModeChange  );
     pointPresenter.init( point );
     this.#pointPresenter.set( point.id, pointPresenter );
   };
