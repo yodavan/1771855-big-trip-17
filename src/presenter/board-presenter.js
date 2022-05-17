@@ -5,6 +5,7 @@ import NewTripSort from '../view/new-trip-sort-view.js';
 import PointPresenter from './point-presenter.js';
 import NoTripPoints from '../view/no-trip-points-view.js';
 import { render, RenderPosition } from '../framework/render.js';
+import { updateItem } from '../utils.js';
 
 export default class BoardPresenter {
   #tripPriceContainer = null;
@@ -29,6 +30,11 @@ export default class BoardPresenter {
 
   #renderSortFilters = () => {
     render( new NewTripSort, this.#boardContainer );
+  };
+
+  #handlePointChange = ( updatedPoint ) => {
+    this.#boardPoints = updateItem( this.#boardPoints, updatedPoint );
+    this.#pointPresenter.get( updatedPoint.id ).init( updatedPoint );
   };
 
   #renderPoint = ( point ) => {
