@@ -1,4 +1,5 @@
 import { getRandomInteger } from '../utils.js';
+import { nanoid } from 'nanoid';
 
 const price = [ 222, 400, 45, 78, 90, 145, 278, ];
 const typePoints = [ 'taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant' ];
@@ -370,6 +371,7 @@ const dataOffers = new GeneratePoints( offers );
 const dataDestination = new GeneratePoints( destination );
 
 const generateDataPoint = () => ({
+  id: nanoid(),
   basePrice: dataPrice.getData(),
   dateFrom: dataDateFrom.getData(),
   dateTo: dataDateTo.getData(),

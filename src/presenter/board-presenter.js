@@ -13,6 +13,7 @@ export default class BoardPresenter {
   #pointsModel = null;
   #boardPoints = [];
   #tripList = new NewTripEventsList();
+  #pointPresenter = new Map();
 
   constructor ( boardContainer, tripPriceContainer, filterContainer, pointsModel ) {
     this.#boardContainer = boardContainer;
@@ -23,7 +24,6 @@ export default class BoardPresenter {
 
   init = () => {
     this.#boardPoints = [...this.#pointsModel.points];
-
     this.#renderBoard();
   };
 
@@ -34,10 +34,16 @@ export default class BoardPresenter {
   #renderPoint = ( point ) => {
     const pointPresenter = new PointPresenter( this.#tripList.element );
     pointPresenter.init( point );
+    this.#pointPresenter.set( point.id, pointPresenter );
   };
 
   #renderNoPoints = () => {
     render( new NoTripPoints, this.#boardContainer );
+  };
+
+  #clearPointList = () => {
+    this.#pointPresenter.forEach(( presenter ) => presenter.destroy());
+    this.#pointPresenter.clear();
   };
 
   #renderPoints = () => {
