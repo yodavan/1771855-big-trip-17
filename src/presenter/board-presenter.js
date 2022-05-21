@@ -1,11 +1,12 @@
 import NewTripEventsList from '../view/trip-events-list-view.js';
 import NewInformationTripPrice from '../view/information-trip-price-view.js';
-import NewTripFilters from '../view/new-trip-filters-view.js';
-import NewTripSort from '../view/new-trip-sort-view.js';
+import NewTripFilters from '../view/trip-filters-view.js';
+import NewTripSort from '../view/trip-sort-view.js';
 import PointPresenter from './point-presenter.js';
 import NoTripPoints from '../view/no-trip-points-view.js';
 import { render, RenderPosition } from '../framework/render.js';
 import { updateItem, sortDurationDown, sortDateUp, sortPriceDown } from '../utils.js';
+import { sortData } from '../mock/data-sort.js';
 
 export default class BoardPresenter {
   #tripPriceContainer = null;
@@ -14,7 +15,6 @@ export default class BoardPresenter {
   #pointsModel = null;
   #boardPoints = [];
   #tripList = new NewTripEventsList();
-  #sortComponent = new NewTripSort();
   #pointPresenter = new Map();
 
   constructor ( boardContainer, tripPriceContainer, filterContainer, pointsModel ) {
@@ -54,8 +54,9 @@ export default class BoardPresenter {
   };
 
   #renderSortFilters = () => {
-    render( this.#sortComponent, this.#boardContainer );
-    this.#sortComponent.setClickSortList( this.#handleSortTypeChange);
+    const sortComponent = new NewTripSort( sortData );
+    render( sortComponent, this.#boardContainer );
+    sortComponent.setClickSortList( this.#handleSortTypeChange);
   };
 
   #handlePointChange = ( updatedPoint ) => {
