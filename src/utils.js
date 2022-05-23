@@ -46,6 +46,13 @@ const getDifferenceDate = ( dateTo, dateFrom ) => {
   }
 };
 
+//Сортировка данных
+const sortDurationDown = ( pointA, pointB ) => dayjs( pointB.dateTo ).diff(pointB.dateFrom, 'minute' ) - dayjs( pointA.dateTo ).diff( pointA.dateFrom, 'minute' );
+
+const sortDateUp = ( dateA, dateB ) => dayjs( dateA.dateFrom ).diff( dateB.dateFrom );
+
+const sortPriceDown = ( priceA, priceB ) => priceB.basePrice - priceA.basePrice;
+
 //Возвращает данные в зависимости от name
 const getElement = ( element, data ) => data.find( ({ name }) => element === name );
 
@@ -89,5 +96,8 @@ export {
   getElement,
   getItem,
   getElementType,
-  updateItem
+  updateItem,
+  sortDurationDown,
+  sortDateUp,
+  sortPriceDown,
 };

@@ -1,11 +1,12 @@
 import NewTripEventsList from '../view/trip-events-list-view.js';
 import NewInformationTripPrice from '../view/information-trip-price-view.js';
-import NewTripFilters from '../view/new-trip-filters-view.js';
-import NewTripSort from '../view/new-trip-sort-view.js';
+import NewTripFilters from '../view/trip-filters-view.js';
+import NewTripSort from '../view/trip-sort-view.js';
 import PointPresenter from './point-presenter.js';
 import NoTripPoints from '../view/no-trip-points-view.js';
 import { render, RenderPosition } from '../framework/render.js';
-import { updateItem } from '../utils.js';
+import { updateItem, sortDurationDown, sortDateUp, sortPriceDown } from '../utils.js';
+import { sortData } from '../mock/data-sort.js';
 
 export default class BoardPresenter {
   #tripPriceContainer = null;
@@ -24,7 +25,7 @@ export default class BoardPresenter {
   }
 
   init = () => {
-    this.#boardPoints = [ ...this.#pointsModel.points ];
+    this.#boardPoints = [ ...this.#pointsModel.points ].sort( sortDateUp );
     this.#renderBoard();
   };
 
@@ -32,8 +33,30 @@ export default class BoardPresenter {
     this.#pointPresenter.forEach(( presenter ) => presenter.resetView());
   };
 
+  #sortPoints = ( sortType  ) => {
+    if ( sortType === 'sort-time' ) {
+      return this.#boardPoints.sort( sortDurationDown );
+    }
+
+    if ( sortType === 'sort-day' ) {
+      return this.#boardPoints.sort( sortDateUp );
+    }
+
+    if ( sortType === 'sort-price' ) {
+      return this.#boardPoints.sort( sortPriceDown );
+    }
+  };
+
+  #handleSortTypeChange = ( sortType ) => {
+    this.#sortPoints( sortType );
+    this.#clearPointList();
+    this.#renderPoints();
+  };
+
   #renderSortFilters = () => {
-    render( new NewTripSort, this.#boardContainer );
+    const sortComponent = new NewTripSort( sortData );
+    render( sortComponent, this.#boardContainer );
+    sortComponent.setClickSortList( this.#handleSortTypeChange);
   };
 
   #handlePointChange = ( updatedPoint ) => {
@@ -48,7 +71,12 @@ export default class BoardPresenter {
   };
 
   #renderNoPoints = () => {
-    render( new NoTripPoints, this.#boardContainer );
+    if ( !this.#boardPoints.length ) {
+      return render( new NoTripPoints, this.#boardContainer );
+    }
+
+    this.#renderSortFilters();
+    this.#renderTripPrice();
   };
 
   #clearPointList = () => {
@@ -57,13 +85,6 @@ export default class BoardPresenter {
   };
 
   #renderPoints = () => {
-    if ( !this.#boardPoints.length ) {
-      return this.#renderNoPoints();
-    }
-
-    this.#renderSortFilters();
-    this.#renderTripPrice();
-
     this.#boardPoints.forEach(( point ) => {
       this.#renderPoint( point );
     });
@@ -80,6 +101,7 @@ export default class BoardPresenter {
   };
 
   #renderBoard = () => {
+    this.#renderNoPoints();
     this.#renderPoints();
     this.#renderMainFilters();
 
