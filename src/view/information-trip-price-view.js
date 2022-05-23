@@ -69,7 +69,7 @@ const getTripAmount = ( data ) => ( data.length !== 0 ) ?
     Total: &euro;&nbsp;<span class="trip-info__cost-value">${ getPrice( data ) + getOffersAmount( data ) }</span>
   </p>` : '';
 
-export default class NewInformationTripPrice extends AbstractView {
+export default class InformationTripPriceView extends AbstractView {
 
   constructor( data ) {
     super();

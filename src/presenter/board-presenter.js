@@ -1,12 +1,12 @@
-import NewTripEventsList from '../view/trip-events-list-view.js';
-import NewInformationTripPrice from '../view/information-trip-price-view.js';
-import NewTripFilters from '../view/trip-filters-view.js';
-import NewTripSort from '../view/trip-sort-view.js';
+import TripEventsListView from '../view/trip-events-list-view.js';
+import InformationTripPriceView from '../view/information-trip-price-view.js';
+import TripFiltersView from '../view/trip-filters-view.js';
+import TripSortView from '../view/trip-sort-view.js';
 import PointPresenter from './point-presenter.js';
-import NoTripPoints from '../view/no-trip-points-view.js';
+import NoTripPointsView from '../view/no-trip-points-view.js';
 import { render, RenderPosition } from '../framework/render.js';
 import { updateItem, sortDurationDown, sortDateUp, sortPriceDown } from '../utils.js';
-import { sortData } from '../mock/data-sort.js';
+import { valuesListSort } from '../mock/data-sort.js';
 
 export default class BoardPresenter {
   #tripPriceContainer = null;
@@ -14,7 +14,7 @@ export default class BoardPresenter {
   #boardContainer = null;
   #pointsModel = null;
   #boardPoints = [];
-  #tripList = new NewTripEventsList();
+  #tripList = new TripEventsListView();
   #pointPresenter = new Map();
 
   constructor ( boardContainer, tripPriceContainer, filterContainer, pointsModel ) {
@@ -54,7 +54,7 @@ export default class BoardPresenter {
   };
 
   #renderSortFilters = () => {
-    const sortComponent = new NewTripSort( sortData );
+    const sortComponent = new TripSortView( valuesListSort );
     render( sortComponent, this.#boardContainer );
     sortComponent.setClickSortList( this.#handleSortTypeChange);
   };
@@ -72,7 +72,7 @@ export default class BoardPresenter {
 
   #renderNoPoints = () => {
     if ( !this.#boardPoints.length ) {
-      return render( new NoTripPoints, this.#boardContainer );
+      return render( new NoTripPointsView, this.#boardContainer );
     }
 
     this.#renderSortFilters();
@@ -91,13 +91,13 @@ export default class BoardPresenter {
   };
 
   #renderTripPrice = () => {
-    const tripPrice = new NewInformationTripPrice( this.#boardPoints );
+    const tripPrice = new InformationTripPriceView( this.#boardPoints );
 
     render( tripPrice, this.#tripPriceContainer, RenderPosition.AFTERBEGIN );
   };
 
   #renderMainFilters = () => {
-    render( new NewTripFilters, this.#filterContainer );
+    render( new TripFiltersView, this.#filterContainer );
   };
 
   #renderBoard = () => {

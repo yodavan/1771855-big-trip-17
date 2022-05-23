@@ -35,7 +35,7 @@ const getOfferItem = ( item, offers ) => `<div class="event__offer-selector">
 const createOffers = ( array, offers ) => ( array.length !== 0 ) ?
   `<div class="event__available-offers">${ array.map(( item ) => getOfferItem( item, offers )).join('') }</div>` : '';
 
-export default class NewEditPoint extends AbstractView {
+export default class EditPointView extends AbstractView {
 
   constructor( point ) {
     super();

@@ -1,7 +1,7 @@
 
 import { render, replace, remove } from '../framework/render.js';
-import NewItemCardTrip from '../view/item-card-trip-view.js';
-import NewEditPoint from '../view/edit-point-view.js';
+import CardTripView from '../view/card-trip-view.js';
+import EditPointView from '../view/edit-point-view.js';
 
 const Mode = {
   DEFAULT: 'DEFAULT',
@@ -31,8 +31,8 @@ export default class PointPresenter {
     const prevPointComponent = this.#pointComponent;
     const prevPointEditComponent = this.#pointEditComponent;
 
-    this.#pointComponent = new NewItemCardTrip( point );
-    this.#pointEditComponent = new NewEditPoint( point );
+    this.#pointComponent = new CardTripView( point );
+    this.#pointEditComponent = new EditPointView( point );
 
     this.#pointComponent.setEditClickHandler( this.#handleEditClick );
     this.#pointComponent.setFavoriteClickHandler( this.#handleFavoriteClick );

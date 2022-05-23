@@ -13,7 +13,7 @@ const createElementList = ( array ) => ( array.length !== 0 ) ?
     ${ array.map( (item) => createItem(item) ).join('') }
   </ul>` : '';
 
-export default class NewItemCardTrip extends AbstractView {
+export default class CardTripView extends AbstractView {
 
   constructor( point ) {
     super();
