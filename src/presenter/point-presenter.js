@@ -76,6 +76,7 @@ export default class PointPresenter {
   };
 
   #replaceFormToCard = () => {
+    this.#pointEditComponent.reset( this.#point );
     replace( this.#pointComponent, this.#pointEditComponent );
     document.removeEventListener( 'keydown', this.#EscKeyDownHandler );
     this.#mode = Mode.DEFAULT;
