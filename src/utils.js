@@ -87,6 +87,8 @@ const updateItem = ( items, update ) => {
   ];
 };
 
+const getNumberFromString = ( str ) => Number( str.split('').filter((item) => Number(item)).join('') );
+
 export {
   getRandomInteger,
   getHumanDate,
@@ -100,4 +102,5 @@ export {
   sortDurationDown,
   sortDateUp,
   sortPriceDown,
+  getNumberFromString,
 };

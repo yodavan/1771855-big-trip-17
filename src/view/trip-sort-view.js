@@ -5,15 +5,15 @@ const getSortElement = ( { id, name, checked, disabled } ) => `<div class="trip-
                                                                   <label class="trip-sort__btn" for="sort-${ id }">${ name }</label>
                                                                 </div>`;
 
-export default class NewTripSort extends AbstractView {
+export default class TripSortView extends AbstractView {
 
-  constructor( sortData ) {
+  constructor( valuesListSort ) {
     super();
-    this.sortData = sortData;
+    this.valuesListSort = valuesListSort;
   }
 
   get template() {
-    const sortList = this.sortData.map(( item ) => getSortElement( item )).join('');
+    const sortList = this.valuesListSort.map(( item ) => getSortElement( item )).join('');
 
     return `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
               ${ sortList }
