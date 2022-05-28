@@ -139,6 +139,11 @@ export default class EditPointView extends AbstractStatefulView {
 
   #formSubmitHandler = ( evt ) => {
     evt.preventDefault();
+
+    if ( new Date( this._state.dateFrom ) > new Date( this._state.dateTo ) ) {
+      return this.element.querySelector('#event-end-time-1').style.border = '1px solid red';
+    }
+
     this._callback.formSubmit( EditPointView.parseStateToPoint( this._state ) );
   };
 
