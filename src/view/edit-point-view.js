@@ -178,6 +178,13 @@ export default class EditPointView extends AbstractStatefulView {
   };
 
   #changePrice = ( evt ) => {
+    const buttonSubmit = this.element.querySelector('.event__save-btn');
+
+    if ( !Number( evt.target.value ) ) {
+      return buttonSubmit.disabled = true;
+    }
+
+    buttonSubmit.disabled = false;
     this._setState({
       basePrice: evt.target.value,
     });
