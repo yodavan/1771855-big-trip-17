@@ -15,11 +15,11 @@ const getPictures = ( array ) => ( array.length ) ?
     </div>
   </div>` : '';
 
-const createSection = ( item ) => ( item.pictures.length === 0 && item.description === '' ) ? '' :
+const createSection = ({ pictures, description }) => ( !pictures.length && !description ) ? '' :
   `<section class="event__section  event__section--destination">
     <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-    ${ getText( item.description ) }
-    ${ getPictures( item.pictures ) }
+    ${ getText( description ) }
+    ${ getPictures( pictures ) }
   </section>`;
 
 const getTypeList = ( item, type ) => `<div class="event__type-item">
@@ -172,6 +172,12 @@ export default class EditPointView extends AbstractStatefulView {
   };
 
   #changeDestination = ( evt ) => {
+    const isTrue = destinationData.some(({ name }) => name === evt.target.value );
+
+    if ( !isTrue ) {
+      return evt.target.value = this._state.destination;
+    }
+
     this.updateElement({
       destination: evt.target.value,
     });
