@@ -1,9 +1,9 @@
 const valuesListSort = [
-  { id: 'day', name: 'Day', checked: true, disabled: false },
-  { id: 'event', name: 'Event', checked: false, disabled: true },
-  { id: 'time', name: 'Time', checked: false, disabled: false },
-  { id: 'price', name: 'Price', checked: false, disabled: false },
-  { id: 'offer', name: 'Offers', checked: false, disabled: true },
+  { id: 'sort-day', name: 'Day', disabled: false },
+  { id: 'sort-event', name: 'Event', disabled: true },
+  { id: 'sort-time', name: 'Time', disabled: false },
+  { id: 'sort-price', name: 'Price', disabled: false },
+  { id: 'sort-offer', name: 'Offers', disabled: true },
 ];
 
 export { valuesListSort };

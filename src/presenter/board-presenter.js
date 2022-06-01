@@ -34,7 +34,7 @@ export default class BoardPresenter {
   }
 
   init = () => {
-    this.#renderBoard({ renderNotAllData: true, renderAllData: true });
+    this.#renderBoard({ renderAllData: true });
   };
 
   #handleModeChange = () => {
@@ -48,7 +48,7 @@ export default class BoardPresenter {
   };
 
   #renderSortFilters = () => {
-    this.#sortComponent = new TripSortView( valuesListSort );
+    this.#sortComponent = new TripSortView( valuesListSort, this.#currentSortPoint );
     render( this.#sortComponent, this.#boardContainer );
     this.#sortComponent.setClickSortList( this.#handleSortTypeChange);
   };
@@ -78,18 +78,15 @@ export default class BoardPresenter {
     // - обновить всю доску (например, при переключении фильтра)
     switch (updateType) {
       case UpdateType.PATCH:
-        // - обновить часть списка (например, когда поменялось описание)
         this.#pointPresenter.get(data.id).init(data);
         break;
       case UpdateType.MINOR:
-        // - обновить список (например, когда задача ушла в архив)
         this.#clearPointList({ removeNotAllData: true });
         this.#renderBoard();
         break;
       case UpdateType.MAJOR:
-        // - обновить всю доску (например, при переключении фильтра)
         this.#clearPointList({ removeNotAllData: true, removeAllData: true });
-        this.#renderBoard({ renderNotAllData: true });
+        this.#renderBoard();
         break;
     }
   };
@@ -106,11 +103,10 @@ export default class BoardPresenter {
 
     if ( removeNotAllData ) {
       remove( this.#tripPrice );
+      remove( this.#sortComponent );
     }
 
     if ( removeAllData ) {
-      remove( this.#sortComponent );
-
       this.#currentSortPoint = 'sort-day';
     }
   };
@@ -131,23 +127,20 @@ export default class BoardPresenter {
     render( this.#mainFilters, this.#filterContainer );
   };
 
-  #renderBoard = ({ renderNotAllData = false, renderAllData = false } = {}) => {
+  #renderBoard = ({ renderAllData = false } = {}) => {
     this.#renderPoints();
     this.#renderTripPrice();
 
     if ( !this.points.length ) {
-      this.#renderMainFilters();
       render( new NoTripPointsView, this.#boardContainer );
       return;
     }
 
-    if ( renderNotAllData ) {
-      this.#renderSortFilters();
-    }
+    this.#renderSortFilters();
 
     if ( renderAllData ) {
       this.#renderMainFilters();
-      render( this.#tripList, this.#boardContainer );
     }
+    render( this.#tripList, this.#boardContainer );
   };
 }

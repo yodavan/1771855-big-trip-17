@@ -145,7 +145,7 @@ export default class EditPointView extends AbstractStatefulView {
   #pointDeleteHandler = ( evt ) => {
     evt.preventDefault();
     this._callback.pointDelete( EditPointView.parseStateToPoint( this._state ) );
-  }
+  };
 
   #formSubmitHandler = ( evt ) => {
     evt.preventDefault();

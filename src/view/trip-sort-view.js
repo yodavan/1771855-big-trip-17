@@ -1,20 +1,21 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
-const getSortElement = ( { id, name, checked, disabled } ) =>
-  `<div class="trip-sort__item  trip-sort__item--${ id }">
-    <input id="sort-${ id }" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-${ id }" ${ checked ? 'checked' : '' } ${ disabled ? 'disabled' : '' } >
-    <label class="trip-sort__btn" for="sort-${ id }">${ name }</label>
+const getSortElement = ( { id, name, disabled }, currentSortPoint ) =>
+  `<div class="trip-sort__item  trip-sort__item--${ id.slice( 5 ) }">
+    <input id="${ id }" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="${ id }" ${ currentSortPoint === id ? 'checked' : '' } ${ disabled ? 'disabled' : '' } >
+    <label class="trip-sort__btn" for="${ id }">${ name }</label>
   </div>`;
 
 export default class TripSortView extends AbstractView {
 
-  constructor( valuesListSort ) {
+  constructor( valuesListSort, currentSortPoint ) {
     super();
     this.valuesListSort = valuesListSort;
+    this.currentSortPoint = currentSortPoint;
   }
 
   get template() {
-    const sortList = this.valuesListSort.map(( item ) => getSortElement( item )).join('');
+    const sortList = this.valuesListSort.map(( item ) => getSortElement( item, this.currentSortPoint )).join('');
 
     return `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
               ${ sortList }
