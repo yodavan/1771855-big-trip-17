@@ -137,6 +137,16 @@ export default class EditPointView extends AbstractStatefulView {
     this.element.querySelector('form').addEventListener('submit', this.#formSubmitHandler);
   };
 
+  setDeleteClickHandler = ( callback ) => {
+    this._callback.pointDelete = callback;
+    this.element.querySelector('.event__reset-btn').addEventListener('click', this.#pointDeleteHandler);
+  };
+
+  #pointDeleteHandler = ( evt ) => {
+    evt.preventDefault();
+    this._callback.pointDelete( EditPointView.parseStateToPoint( this._state ) );
+  }
+
   #formSubmitHandler = ( evt ) => {
     evt.preventDefault();
 
@@ -262,6 +272,7 @@ export default class EditPointView extends AbstractStatefulView {
     this.#setInnerHandlers();
     this.setClickCloseEditPopup( this._callback.closeEditPopup );
     this.setFormSubmitHandler( this._callback.formSubmit );
+    this.setDeleteClickHandler( this._callback.pointDelete );
   };
 
   static parsePointToState = ( point ) => ({ ...point, isDateFrom: '', isDateTo: '' });

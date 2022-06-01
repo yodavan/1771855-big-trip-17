@@ -40,6 +40,7 @@ export default class PointPresenter {
 
     this.#pointEditComponent.setFormSubmitHandler( this.#handleFormSubmit );
     this.#pointEditComponent.setClickCloseEditPopup( this.#handleEditClose );
+    this.#pointEditComponent.setDeleteClickHandler( this.#handleDeletePoint );
 
     if ( prevPointComponent === null || prevPointEditComponent === null ) {
       render( this.#pointComponent, this.#pointListContainer );
@@ -114,4 +115,12 @@ export default class PointPresenter {
     );
     this.#replaceFormToCard();
   };
+
+  #handleDeletePoint = ( point ) => {
+    this.#changeData(
+      UserAction.DELETE_POINT,
+      UpdateType.MINOR,
+      point
+    );
+  }
 }

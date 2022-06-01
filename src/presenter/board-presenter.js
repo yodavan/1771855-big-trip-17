@@ -34,7 +34,7 @@ export default class BoardPresenter {
   }
 
   init = () => {
-    this.#renderBoard();
+    this.#renderBoard({ renderNotAllData: true, renderAllData: true });
   };
 
   #handleModeChange = () => {
@@ -84,13 +84,12 @@ export default class BoardPresenter {
       case UpdateType.MINOR:
         // - обновить список (например, когда задача ушла в архив)
         this.#clearPointList({ removeNotAllData: true });
-        this.#renderPoints();
-        this.#renderTripPrice();
+        this.#renderBoard();
         break;
       case UpdateType.MAJOR:
         // - обновить всю доску (например, при переключении фильтра)
         this.#clearPointList({ removeNotAllData: true, removeAllData: true });
-        this.#renderBoard();
+        this.#renderBoard({ renderNotAllData: true });
         break;
     }
   };
@@ -99,15 +98,6 @@ export default class BoardPresenter {
     const pointPresenter = new PointPresenter( this.#tripList.element, this.#handleViewAction, this.#handleModeChange  );
     pointPresenter.init( point );
     this.#pointPresenter.set( point.id, pointPresenter );
-  };
-
-  #renderNoPoints = () => {
-    if ( !this.points.length ) {
-      return render( new NoTripPointsView, this.#boardContainer );
-    }
-
-    this.#renderSortFilters();
-    this.#renderTripPrice();
   };
 
   #clearPointList = ({ removeNotAllData = false, removeAllData = false } = {}) => {
@@ -141,11 +131,23 @@ export default class BoardPresenter {
     render( this.#mainFilters, this.#filterContainer );
   };
 
-  #renderBoard = () => {
-    this.#renderNoPoints();
+  #renderBoard = ({ renderNotAllData = false, renderAllData = false } = {}) => {
     this.#renderPoints();
-    this.#renderMainFilters();
+    this.#renderTripPrice();
 
-    render( this.#tripList, this.#boardContainer );
+    if ( !this.points.length ) {
+      this.#renderMainFilters();
+      render( new NoTripPointsView, this.#boardContainer );
+      return;
+    }
+
+    if ( renderNotAllData ) {
+      this.#renderSortFilters();
+    }
+
+    if ( renderAllData ) {
+      this.#renderMainFilters();
+      render( this.#tripList, this.#boardContainer );
+    }
   };
 }
