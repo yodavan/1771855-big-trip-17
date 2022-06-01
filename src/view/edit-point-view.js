@@ -141,7 +141,8 @@ export default class EditPointView extends AbstractStatefulView {
     evt.preventDefault();
 
     if ( new Date( this._state.dateFrom ) > new Date( this._state.dateTo ) ) {
-      return this.element.querySelector('#event-end-time-1').style.border = '1px solid red';
+      this.element.querySelector('#event-end-time-1').style.border = '1px solid red';
+      return;
     }
 
     this._callback.formSubmit( EditPointView.parseStateToPoint( this._state ) );
@@ -175,7 +176,8 @@ export default class EditPointView extends AbstractStatefulView {
     const isTrue = destinationData.some(({ name }) => name === evt.target.value );
 
     if ( !isTrue ) {
-      return evt.target.value = this._state.destination;
+      evt.target.value = this._state.destination;
+      return;
     }
 
     this.updateElement({
@@ -187,12 +189,13 @@ export default class EditPointView extends AbstractStatefulView {
     const buttonSubmit = this.element.querySelector('.event__save-btn');
 
     if ( !Number( evt.target.value ) ) {
-      return buttonSubmit.disabled = true;
+      buttonSubmit.disabled = true;
+      return;
     }
 
     buttonSubmit.disabled = false;
     this._setState({
-      basePrice: evt.target.value,
+      basePrice: Number( evt.target.value ),
     });
   };
 

@@ -2,6 +2,7 @@
 import { render, replace, remove } from '../framework/render.js';
 import CardTripView from '../view/card-trip-view.js';
 import EditPointView from '../view/edit-point-view.js';
+import { UserAction, UpdateType } from '../const.js';
 
 const Mode = {
   DEFAULT: 'DEFAULT',
@@ -94,7 +95,11 @@ export default class PointPresenter {
   };
 
   #handleFavoriteClick = () => {
-    this.#changeData({ ...this.#point, isFavorite: !this.#point.isFavorite });
+    this.#changeData(
+      UserAction.UPDATE_POINT,
+      UpdateType.PATCH,
+      { ...this.#point, isFavorite: !this.#point.isFavorite }
+    );
   };
 
   #handleEditClose = () => {
@@ -102,7 +107,11 @@ export default class PointPresenter {
   };
 
   #handleFormSubmit = ( point ) => {
-    this.#changeData( point );
+    this.#changeData(
+      UserAction.UPDATE_POINT,
+      UpdateType.MINOR,
+      point
+    );
     this.#replaceFormToCard();
   };
 }
