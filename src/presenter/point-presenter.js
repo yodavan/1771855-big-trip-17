@@ -3,6 +3,7 @@ import { render, replace, remove } from '../framework/render.js';
 import CardTripView from '../view/card-trip-view.js';
 import EditPointView from '../view/edit-point-view.js';
 import { UserAction, UpdateType } from '../const.js';
+import { isTrueArray } from '../utils.js';
 
 const Mode = {
   DEFAULT: 'DEFAULT',
@@ -108,9 +109,14 @@ export default class PointPresenter {
   };
 
   #handleFormSubmit = ( point ) => {
+    const isDataTrue =
+      this.#point.dateTo !== point.dateTo || this.#point.dateFrom !== point.dateFrom ||
+      this.#point.basePrice !== point.basePrice || this.#point.destination !== point.destination ||
+      !isTrueArray( this.#point.offers, point.offers );
+
     this.#changeData(
       UserAction.UPDATE_POINT,
-      UpdateType.MINOR,
+      isDataTrue ? UpdateType.MINOR : UpdateType.PATCH,
       point
     );
     this.#replaceFormToCard();

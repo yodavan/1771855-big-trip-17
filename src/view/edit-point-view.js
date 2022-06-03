@@ -211,15 +211,15 @@ export default class EditPointView extends AbstractStatefulView {
 
   #changeDateFromHandler = ( [ selectedDates ] ) => {
     this.updateElement({
-      dateFrom: selectedDates,
-      isDateFrom: selectedDates,
+      dateFrom: selectedDates.toISOString(),
+      isDateFrom: selectedDates.toISOString(),
     });
   };
 
   #changeDateToHandler = ([ selectedDates ]) => {
     this.updateElement({
-      dateTo: selectedDates,
-      isDateTo: selectedDates,
+      dateTo: selectedDates.toISOString(),
+      isDateTo: selectedDates.toISOString(),
     });
   };
 

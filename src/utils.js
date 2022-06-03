@@ -73,6 +73,15 @@ const getItem = ( element, data ) => {
   });
 };
 
+//Проверка двух массивов на равенство
+const isTrueArray = ( array1, array2 ) => {
+  if ( array1.length !== array2.length ) {
+    return false;
+  }
+
+  return !array1.filter(( item ) => !array2.some(( i ) => i === item )).length;
+};
+
 const getNumberFromString = ( str ) => Number( str.split('').filter((item) => Number(item)).join('') );
 
 export {
@@ -88,4 +97,5 @@ export {
   sortDateUp,
   sortPriceDown,
   getNumberFromString,
+  isTrueArray
 };
