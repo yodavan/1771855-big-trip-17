@@ -1,4 +1,4 @@
-import { sortDurationDown, sortDateUp, sortPriceDown } from './utils.js';
+import { sortDurationDown, sortDateUp, sortPriceDown } from './utils/utils.js';
 
 const SortType = {
   'sort-time': sortDurationDown,

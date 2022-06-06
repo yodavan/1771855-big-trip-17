@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { getHumanDate, getDifferenceDate, getHoursMinute, getElement, getItem, getElementType } from '../utils.js';
+import { getHumanDate, getDifferenceDate, getHoursMinute, getElement, getItem, getElementType } from '../utils/utils.js';
 import { offersData, destinationData } from '../mock/route-point-data.js';
 
 const createItem = ( item ) => `<li class="event__offer">

@@ -3,7 +3,7 @@ import { render, replace, remove } from '../framework/render.js';
 import CardTripView from '../view/card-trip-view.js';
 import EditPointView from '../view/edit-point-view.js';
 import { UserAction, UpdateType } from '../const.js';
-import { isTrueArray } from '../utils.js';
+import { isTrueArray } from '../utils/utils.js';
 
 const Mode = {
   DEFAULT: 'DEFAULT',

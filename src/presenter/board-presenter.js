@@ -1,16 +1,15 @@
 import TripEventsListView from '../view/trip-events-list-view.js';
 import InformationTripPriceView from '../view/information-trip-price-view.js';
-import TripFiltersView from '../view/trip-filters-view.js';
 import TripSortView from '../view/trip-sort-view.js';
 import PointPresenter from './point-presenter.js';
 import NoTripPointsView from '../view/no-trip-points-view.js';
 import { remove, render, RenderPosition } from '../framework/render.js';
 import { SortType, UpdateType, UserAction } from '../const.js';
-import { valuesListSort } from '../mock/data-sort.js';
+import { valuesListSort } from '../utils/data-sort.js';
+import { filter } from '../utils/data-filter.js';
 
 export default class BoardPresenter {
   #tripPriceContainer = null;
-  #filterContainer = null;
   #boardContainer = null;
   #pointsModel = null;
   #tripList = new TripEventsListView();
@@ -18,23 +17,29 @@ export default class BoardPresenter {
   #currentSortPoint = 'sort-day';
   #tripPrice = new InformationTripPriceView();
   #sortComponent = new TripSortView();
-  #mainFilters = new TripFiltersView();
+  #filterModel = null;
+  #noPoints = new NoTripPointsView();
 
-  constructor ( boardContainer, tripPriceContainer, filterContainer, pointsModel ) {
+  constructor ( boardContainer, tripPriceContainer, pointsModel, filterModel ) {
     this.#boardContainer = boardContainer;
     this.#tripPriceContainer = tripPriceContainer;
-    this.#filterContainer = filterContainer;
     this.#pointsModel = pointsModel;
+    this.#filterModel = filterModel;
 
     this.#pointsModel.addObserver( this.#handleModelEvent );
+    this.#filterModel.addObserver( this.#handleModelEvent );
   }
 
   get points () {
-    return [ ...this.#pointsModel.points ].sort( SortType[ this.#currentSortPoint ] );
+    const filterType = this.#filterModel.filter;
+    const points = this.#pointsModel.points;
+    const filteredPoints = filter[ filterType ]( points );
+
+    return filteredPoints.sort( SortType[ this.#currentSortPoint ] );
   }
 
   init = () => {
-    this.#renderBoard({ renderAllData: true });
+    this.#renderBoard();
   };
 
   #handleModeChange = () => {
@@ -102,6 +107,7 @@ export default class BoardPresenter {
     this.#pointPresenter.clear();
 
     if ( removeNotAllData ) {
+      remove( this.#noPoints );
       remove( this.#tripPrice );
       remove( this.#sortComponent );
     }
@@ -123,24 +129,16 @@ export default class BoardPresenter {
     render( this.#tripPrice, this.#tripPriceContainer, RenderPosition.AFTERBEGIN );
   };
 
-  #renderMainFilters = () => {
-    render( this.#mainFilters, this.#filterContainer );
-  };
-
-  #renderBoard = ({ renderAllData = false } = {}) => {
+  #renderBoard = () => {
     this.#renderPoints();
     this.#renderTripPrice();
 
     if ( !this.points.length ) {
-      render( new NoTripPointsView, this.#boardContainer );
+      render( this.#noPoints, this.#boardContainer );
       return;
     }
 
     this.#renderSortFilters();
-
-    if ( renderAllData ) {
-      this.#renderMainFilters();
-    }
     render( this.#tripList, this.#boardContainer );
   };
 }

@@ -24,12 +24,11 @@ export default class TripSortView extends AbstractView {
 
   setClickSortList = ( callback ) => {
     this._callback.closeEditPopup = callback;
-    this.element.addEventListener('click', this.#closeEditPopup);
+    this.element.addEventListener('change', this.#closeEditPopup);
   };
 
   #closeEditPopup = ( evt ) => {
-    if ( evt.target.classList.contains('trip-sort__input') ) {
-      this._callback.closeEditPopup( evt.target.id );
-    }
+    evt.preventDefault();
+    this._callback.closeEditPopup( evt.target.id );
   };
 }

@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { getItem, getElementType, getHumanDate } from '../utils.js';
+import { getItem, getElementType, getHumanDate } from '../utils/utils.js';
 import { offersData } from '../mock/route-point-data.js';
 
 const getSortedArrayDateFrom = ( data ) => {

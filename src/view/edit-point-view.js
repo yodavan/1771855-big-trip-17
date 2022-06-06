@@ -1,5 +1,5 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
-import { getDateAndHours, getElement, getElementType, getNumberFromString } from '../utils.js';
+import { getDateAndHours, getElement, getElementType, getNumberFromString } from '../utils/utils.js';
 import { destinationData, offersData, typePoints } from '../mock/route-point-data.js';
 import flatpickr from 'flatpickr';
 
