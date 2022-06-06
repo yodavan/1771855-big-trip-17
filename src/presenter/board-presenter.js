@@ -18,7 +18,8 @@ export default class BoardPresenter {
   #tripPrice = new InformationTripPriceView();
   #sortComponent = new TripSortView();
   #filterModel = null;
-  #noPoints = new NoTripPointsView();
+  #noPoints = null;
+  #filterType = 'everything';
 
   constructor ( boardContainer, tripPriceContainer, pointsModel, filterModel ) {
     this.#boardContainer = boardContainer;
@@ -31,9 +32,9 @@ export default class BoardPresenter {
   }
 
   get points () {
-    const filterType = this.#filterModel.filter;
+    this.#filterType = this.#filterModel.filter;
     const points = this.#pointsModel.points;
-    const filteredPoints = filter[ filterType ]( points );
+    const filteredPoints = filter[ this.#filterType ]( points );
 
     return filteredPoints.sort( SortType[ this.#currentSortPoint ] );
   }
@@ -123,6 +124,11 @@ export default class BoardPresenter {
     });
   };
 
+  #renderNoPoints = () => {
+    this.#noPoints = new NoTripPointsView( this.#filterType );
+    render( this.#noPoints, this.#boardContainer );
+  };
+
   #renderTripPrice = () => {
     this.#tripPrice = new InformationTripPriceView( this.points );
 
@@ -134,7 +140,7 @@ export default class BoardPresenter {
     this.#renderTripPrice();
 
     if ( !this.points.length ) {
-      render( this.#noPoints, this.#boardContainer );
+      this.#renderNoPoints();
       return;
     }
 
