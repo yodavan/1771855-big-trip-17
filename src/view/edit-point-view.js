@@ -1,5 +1,5 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
-import { getDateAndHours, getElement, getElementType, getNumberFromString } from '../utils.js';
+import { getDateAndHours, getElement, getElementType, getNumberFromString } from '../utils/utils.js';
 import { destinationData, offersData, typePoints } from '../mock/route-point-data.js';
 import flatpickr from 'flatpickr';
 
@@ -15,11 +15,11 @@ const getPictures = ( array ) => ( array.length ) ?
     </div>
   </div>` : '';
 
-const createSection = ( item ) => ( item.pictures.length === 0 && item.description === '' ) ? '' :
+const createSection = ({ pictures, description }) => ( !pictures.length && !description ) ? '' :
   `<section class="event__section  event__section--destination">
     <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-    ${ getText( item.description ) }
-    ${ getPictures( item.pictures ) }
+    ${ getText( description ) }
+    ${ getPictures( pictures ) }
   </section>`;
 
 const getTypeList = ( item, type ) => `<div class="event__type-item">
@@ -137,8 +137,24 @@ export default class EditPointView extends AbstractStatefulView {
     this.element.querySelector('form').addEventListener('submit', this.#formSubmitHandler);
   };
 
+  setDeleteClickHandler = ( callback ) => {
+    this._callback.pointDelete = callback;
+    this.element.querySelector('.event__reset-btn').addEventListener('click', this.#pointDeleteHandler);
+  };
+
+  #pointDeleteHandler = ( evt ) => {
+    evt.preventDefault();
+    this._callback.pointDelete( EditPointView.parseStateToPoint( this._state ) );
+  };
+
   #formSubmitHandler = ( evt ) => {
     evt.preventDefault();
+
+    if ( new Date( this._state.dateFrom ) > new Date( this._state.dateTo ) ) {
+      this.element.querySelector('#event-end-time-1').style.border = '1px solid red';
+      return;
+    }
+
     this._callback.formSubmit( EditPointView.parseStateToPoint( this._state ) );
   };
 
@@ -167,28 +183,43 @@ export default class EditPointView extends AbstractStatefulView {
   };
 
   #changeDestination = ( evt ) => {
+    const isTrue = destinationData.some(({ name }) => name === evt.target.value );
+
+    if ( !isTrue ) {
+      evt.target.value = this._state.destination;
+      return;
+    }
+
     this.updateElement({
       destination: evt.target.value,
     });
   };
 
   #changePrice = ( evt ) => {
+    const buttonSubmit = this.element.querySelector('.event__save-btn');
+
+    if ( !Number( evt.target.value ) ) {
+      buttonSubmit.disabled = true;
+      return;
+    }
+
+    buttonSubmit.disabled = false;
     this._setState({
-      basePrice: evt.target.value,
+      basePrice: Number( evt.target.value ),
     });
   };
 
   #changeDateFromHandler = ( [ selectedDates ] ) => {
     this.updateElement({
-      dateFrom: selectedDates,
-      isDateFrom: selectedDates,
+      dateFrom: selectedDates.toISOString(),
+      isDateFrom: selectedDates.toISOString(),
     });
   };
 
   #changeDateToHandler = ([ selectedDates ]) => {
     this.updateElement({
-      dateTo: selectedDates,
-      isDateTo: selectedDates,
+      dateTo: selectedDates.toISOString(),
+      isDateTo: selectedDates.toISOString(),
     });
   };
 
@@ -241,6 +272,7 @@ export default class EditPointView extends AbstractStatefulView {
     this.#setInnerHandlers();
     this.setClickCloseEditPopup( this._callback.closeEditPopup );
     this.setFormSubmitHandler( this._callback.formSubmit );
+    this.setDeleteClickHandler( this._callback.pointDelete );
   };
 
   static parsePointToState = ( point ) => ({ ...point, isDateFrom: '', isDateTo: '' });

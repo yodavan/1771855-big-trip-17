@@ -2,6 +2,8 @@
 import { render, replace, remove } from '../framework/render.js';
 import CardTripView from '../view/card-trip-view.js';
 import EditPointView from '../view/edit-point-view.js';
+import { UserAction, UpdateType } from '../const.js';
+import { isTrueArray } from '../utils/utils.js';
 
 const Mode = {
   DEFAULT: 'DEFAULT',
@@ -39,6 +41,7 @@ export default class PointPresenter {
 
     this.#pointEditComponent.setFormSubmitHandler( this.#handleFormSubmit );
     this.#pointEditComponent.setClickCloseEditPopup( this.#handleEditClose );
+    this.#pointEditComponent.setDeleteClickHandler( this.#handleDeletePoint );
 
     if ( prevPointComponent === null || prevPointEditComponent === null ) {
       render( this.#pointComponent, this.#pointListContainer );
@@ -94,7 +97,11 @@ export default class PointPresenter {
   };
 
   #handleFavoriteClick = () => {
-    this.#changeData({ ...this.#point, isFavorite: !this.#point.isFavorite });
+    this.#changeData(
+      UserAction.UPDATE_POINT,
+      UpdateType.PATCH,
+      { ...this.#point, isFavorite: !this.#point.isFavorite }
+    );
   };
 
   #handleEditClose = () => {
@@ -102,7 +109,24 @@ export default class PointPresenter {
   };
 
   #handleFormSubmit = ( point ) => {
-    this.#changeData( point );
+    const isDataTrue =
+      this.#point.dateTo !== point.dateTo || this.#point.dateFrom !== point.dateFrom ||
+      this.#point.basePrice !== point.basePrice || this.#point.destination !== point.destination ||
+      !isTrueArray( this.#point.offers, point.offers );
+
+    this.#changeData(
+      UserAction.UPDATE_POINT,
+      isDataTrue ? UpdateType.MINOR : UpdateType.PATCH,
+      point
+    );
     this.#replaceFormToCard();
+  };
+
+  #handleDeletePoint = ( point ) => {
+    this.#changeData(
+      UserAction.DELETE_POINT,
+      UpdateType.MINOR,
+      point
+    );
   };
 }

@@ -1,4 +1,4 @@
-import { getRandomInteger } from '../utils.js';
+import { getRandomInteger } from '../utils/utils.js';
 import { nanoid } from 'nanoid';
 
 const price = [ 222, 400, 45, 78, 90, 145, 278, ];

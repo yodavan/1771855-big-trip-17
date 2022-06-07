@@ -73,18 +73,13 @@ const getItem = ( element, data ) => {
   });
 };
 
-const updateItem = ( items, update ) => {
-  const index = items.findIndex(( item ) => item.id === update.id);
-
-  if ( index === -1 ) {
-    return items;
+//Проверка двух массивов на равенство
+const isTrueArray = ( array1, array2 ) => {
+  if ( array1.length !== array2.length ) {
+    return false;
   }
 
-  return [
-    ...items.slice( 0, index ),
-    update,
-    ...items.slice( index + 1 ),
-  ];
+  return !array1.filter(( item ) => !array2.some(( i ) => i === item )).length;
 };
 
 const getNumberFromString = ( str ) => Number( str.split('').filter((item) => Number(item)).join('') );
@@ -98,9 +93,9 @@ export {
   getElement,
   getItem,
   getElementType,
-  updateItem,
   sortDurationDown,
   sortDateUp,
   sortPriceDown,
   getNumberFromString,
+  isTrueArray
 };
